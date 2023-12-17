@@ -43,3 +43,120 @@
     white-space: nowrap;
     overflow: hidden;
   }
+
+  .repo_link {
+    color: #ec712f;
+  }
+
+  .repo-container {
+    text-align: center;
+  }
+
+  .inline-content {
+      display: flex;
+      align-items: center; /* Vertically centers the flex items */
+      justify-content: center; /* Horizontally centers the flex items */
+  }
+
+  .author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Makes the image round */
+    margin-right: 10px; /* Adds some space between the avatar and the link */
+  }
+
+
+  .main-container {
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+  }
+
+  .feature-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px; /* Space between feature sections */
+  }
+
+  .feature-container:nth-child(odd) .feature-text {
+    order: 1; /* Text first for odd-numbered features */
+  }
+
+  .feature-container:nth-child(even) .feature-text {
+    order: 2; /* Text second for even-numbered features */
+  }
+
+  .feature-container:nth-child(odd) .feature-image {
+    order: 2; /* Image second for odd-numbered features */
+  }
+
+  .feature-container:nth-child(even) .feature-image {
+    order: 1; /* Image first for even-numbered features */
+  }
+
+  .feature-text, .feature-image {
+    flex: 1; /* Both take up equal space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content horizontally */
+    text-align: center; /* Center text horizontally */
+    margin-bottom: 2rem;
+  }
+
+  .feature-text h2 {
+    font-family:Sans-serif;
+    color:#f5f1ef;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem; 
+    text-align: center;
+  }
+
+  .description {
+    display: block;
+    font-family:Sans-serif;
+    color:#f5f1ef;
+    font-size: 1.5rem;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    text-align: left;
+  }
+
+  .feature-image img {
+    width: auto; /* Full width images on smaller screens */
+    height: auto;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+    margin-left: 3rem;
+    margin-right: 3rem;
+  }
+
+/* Responsive adjustments if necessary */
+@media (max-width: 960px) {
+    .feature-container {
+        flex-direction: column;
+    }
+
+    /* Set the order so text appears on top of the image for both odd and even children */
+    .feature-container:nth-child(odd) .feature-text {
+      order: 1; /* Text first for odd-numbered features */
+    }
+  
+    .feature-container:nth-child(even) .feature-text {
+      order: 2; /* Text second for even-numbered features */
+    }
+  
+    .feature-container:nth-child(odd) .feature-image {
+      order: 1; /* Image second for odd-numbered features */
+    }
+  
+    .feature-container:nth-child(even) .feature-image {
+      order: 2; /* Image first for even-numbered features */
+    }
+
+    .feature-image img {
+        width: auto; /* Full width images on smaller screens */
+        height: auto;
+    }
+}

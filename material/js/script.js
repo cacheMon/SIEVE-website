@@ -20,3 +20,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     showWord();
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('https://api.github.com/repos/scalalang2/golang-fifo')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('author-avatar').src = data.owner.avatar_url;
+        })
+        .catch(error => console.error('Error fetching author avatar:', error));
+});
+
+function scrollToLearnMoreSection() {
+    const usageSection = document.getElementById('howwork');
+    usageSection.scrollIntoView({ behavior: 'smooth' });
+  }
