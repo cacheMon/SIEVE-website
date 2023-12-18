@@ -7,7 +7,7 @@ categories:
   - Performance
 ---
 
-# SIEVE: an eviction algorithm simpler than LRU
+# SIEVE is simpler than LRU
 Caching is a method of storing temporary data for quick access to keep the online world running smoothly. But with limited space, comes a critical decision: what to keep and what to discard.  This is where **eviction algorithms** come into play. Our team recently designed a new cache eviction algorithm called **SIEVE**: it is both very effective and simple with just one FIFO queue.
 <!-- more -->
 
