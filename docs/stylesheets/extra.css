@@ -132,6 +132,12 @@
     margin-right: 3rem;
   }
 
+  .md-content p {
+    line-height: 1.6;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+  }
+
 /* Responsive adjustments if necessary */
 @media (max-width: 960px) {
     .feature-container {
