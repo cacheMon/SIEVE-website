@@ -133,6 +133,7 @@
   }
 
   .md-content p {
+    display: block;
     line-height: 1.6;
     margin-block-start: 1em;
     margin-block-end: 1em;
