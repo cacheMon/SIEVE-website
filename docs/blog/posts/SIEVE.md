@@ -75,7 +75,7 @@ Despite the varied ways LRU is implemented across these libraries - some opt for
 | `groupcache`       | Golang  | 21  |Golang  |  <1  |
 | `mnemonist`       | Javascript |12  |Golang  |  1  |
 | `lru-rs`    | Rust | 16  |  1  |
-| `lru-rs`    | Python + C | 21  | <1  |
+| `lru-dict`    | Python + C | 21  | <1  |
 
 ### SIEVE: Beyond a Mere Eviction Algorithm
 
