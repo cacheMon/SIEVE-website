@@ -14,13 +14,13 @@ Caching is a method of storing temporary data for quick access to keep the onlin
 ## The Importance of Simplicity
 In the world of cache eviction algorithms, there's something to be said for keeping it simple. Complex algorithms, for all their sophistication, can bring their own set of headaches. They can be tricky to debug, sometimes unexpectedly drag down efficiency, and even put a damper on throughput and scalability because of their higher computational needs. 
 
-On the flip side, simpler eviction methods, though maybe not as flashy in managing cache, have a knack for improving system throughput and scalability. Just look at examples like MemC3 and Segcache. They rely on straightforward approaches like FIFO and manage to significantly boost system performance. It turns out, sometimes, the best move is to keep things uncomplicated!
+On the flip side, simpler eviction methods, though maybe not as flashy in managing cache, have a knack for improving system throughput and scalability. Just look at examples like [MemC3](https://www.usenix.org/conference/nsdi13/technical-sessions/presentation/fan) and [Segcache](https://www.usenix.org/conference/nsdi21/presentation/yang-juncheng). They rely on straightforward approaches like FIFO and manage to significantly boost system performance. It turns out, sometimes, the best move is to keep things uncomplicated!
 
 ## Meet SIEVE: The Harmony of Simplicity and Efficiency
 SIEVE is an algorithm that decides what to keep in the cache and what to discard. But unlike its predecessors, it does this with a flair for simplicity and efficiency.
 
 ### A Technical Walkthrough of SIEVE
-SIEVE operates on a beautifully simple yet highly effective principle. It's built on a FIFO queue, supplemented by a "hand" pointer that navigates through the cache. Each object in the queue has a bit indicating whether it's been visited. On a cache hit, SIEVE marks the object as visited. In the event of a cache miss, SIEVE checks the object pointed to by the hand. If the object has been visited, its visited bit is reset, and the hand moves to the next position, keeping the retained object in its original position in the queue. 
+SIEVE is built on a FIFO queue, supplemented by a "hand" pointer that navigates through the cache. Each object in the queue has a bit indicating whether it's been visited. On a cache hit, SIEVE marks the object as visited. In the event of a cache miss, SIEVE checks the object pointed to by the hand. If the object has been visited, its visited bit is reset, and the hand moves to the next position, keeping the retained object in its original position in the queue. 
 This continues until an unvisited object is found and evicted. After eviction, the hand moves to the next position.
 
 
@@ -30,6 +30,26 @@ This continues until an unvisited object is found and evicted. After eviction, t
   </div>
   <figcaption>An iilustration of SIEVE</figcaption>
 </figure>
+
+```bash title="SIEVE pseudocode"
+Input: The request x, doubly-linked queue T, cache size C, hand p
+1: if x is in T then                            # Cache Hit
+2:     x.visited <- true
+3: else                                         # Cache Miss
+4:     if |T| = C then                          # Cache Full
+5:         obj <- p
+6:         if obj is NULL then
+7:             obj <- tail of T
+8:         while obj.visited = true do
+9:             obj.visited <- false
+10:            obj <- obj.prev
+11:            if obj is NULL then
+12:                obj <- tail of T
+13:        p <- obj.prev
+14:        Discard obj in T                     # Eviction
+15:    Insert x in the head of T
+16:    x.visited <- false                       # Insertion
+```
 
 ### SIEVE's Real-World Impact: A Performance Breakdown
 
@@ -58,26 +78,24 @@ In Cachelib, LRU and TwoQ have been tweaked for better scalability. With smart m
 
 SIEVE takes a different approach, eliminating the need for promotion with each cache hit. This simplicity pays off. On a single thread, SIEVE is 16% faster than the spruced-up LRU and 17% quicker than TwoQ on both traces. When ramped up to 16 threads, SIEVE's throughput more than doubles compared to these algorithms on the Meta trace, showcasing its effortless scalability.
 
-<figure markdown>
-  <div style="display:flex;">
-    <img src="../../../../assets/sieve/throughput.png" alt="figure-sieve-efficiency-small" style="width:600px;" />
-  </div>
-  <!-- <figcaption>An iilustration of SIEVE</figcaption> -->
-</figure>
 
 #### Simplicity
 When it comes to simplicity, SIEVE really takes the cake. We delved into the most popular cache libraries and systems across five diverse programming languages: C++, Go, JavaScript, Python, and Rust. Our mission? To swap out the traditional LRU/FIFO with SIEVE.
 
 Despite the varied ways LRU is implemented across these libraries - some opt for doubly-linked lists, others for arrays - integrating SIEVE turned out to be a breeze. Whether it's the structural differences or the coding style, SIEVE slotted in smoothly. As illustrated in the Table, the required code changes to replace LRU with SIEVE were minimal. In all cases, it took no more than 21 lines of code modifications (tests not included). This highlights SIEVE's simplicity and ease of integration in diverse coding environments.
 
+<figure markdown>
+
 | Cache library | Language   | Lines   | Hour of Work   |
 | :---------: | :---------: |:---------: | :---------: |
-| `groupcache`       | Golang  | 21  |Golang  |  <1  |
-| `mnemonist`       | Javascript |12  |Golang  |  1  |
-| `lru-rs`    | Rust | 16  |  1  |
-| `lru-dict`    | Python + C | 21  | <1  |
+| [groupcache](https://github.com/golang/groupcache) | Golang  | 21  | <1  |
+| [mnemonist](https://github.com/Yomguithereal/mnemonist) | Javascript |12  |  1  |
+| [lru-rs](https://github.com/jeromefroe/lru-rs) | Rust | 16  |  1  |
+| [lru-dict](https://github.com/amitdev/lru-dict)| Python + C | 21  | <1  |
 
-### SIEVE: Beyond a Mere Eviction Algorithm
+</figure>
+
+### SIEVE is beyond an eviction algorithm
 
 SIEVE isn't just playing the part of a cache eviction algorithm anymore; it's stepping up as a cache design superstar. Think of it like giving a fresh spin to classics. We've plugged SIEVE into fan-favorites like LeCaR, TwoQ, and ARC, swapping out their old LRU hearts for a SIEVE one. And guess what? This little switcheroo is working wonders!
 
@@ -90,6 +108,10 @@ We didn't stop there. We pushed SIEVE a bit further by letting it peek into the 
   </div>
   <!-- <figcaption>An iilustration of SIEVE</figcaption> -->
 </figure>
+
+
+### SIEVE is not scan-resistant
+
 
 ## Conclusion: Embracing the Future with SIEVE
 As we conclude this journey through the intricacies of SIEVE, it's clear that this algorithm isn't just a step forward in caching technology—it's a leap into a future where digital experiences are faster and more efficient. Whether you're a developer, researcher, or tech aficionado, SIEVE offers exciting possibilities for innovation in web caching.
