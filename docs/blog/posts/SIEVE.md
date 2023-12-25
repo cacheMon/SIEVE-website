@@ -73,10 +73,17 @@ For anyone interested, see the [sieve cache implementation code](#sieve-cache-co
 SIEVE's practicality shines in its real-world application. 
 
 #### Efficiency
-Our evaluation, involving over 1559 traces from diverse datasets that together contain 247,017 million requests to 14,852 million objects, positions SIEVE as a frontrunner.
+Our evaluation, involving over 1559 traces from diverse datasets that together contain 247,017 million requests to 14,852 million objects, show that SIEVE outperforms all state-of-the-art eviction algorithms on more than 45% of the traces.
 
-In the larger cache sizes, SIEVE is a clear leader, significantly reducing miss ratios in comparison to FIFO. For instance, in one of the largest CDN company
-dataset, it trumps FIFO’s miss ratio by more than 42% on some traces, with an average reduction of 21%. Even against sophisticated algorithms like ARC, SIEVE holds its ground, reducing ARC’s miss ratio by up to 63.2%.
+The following figure shows the miss ratio reduction (from FIFO) of different algorithms across traces. The whiskers on the boxplots are defined using p10 and p90, allowing us to disregard extreme data
+and concentrate on the typical cases.
+SIEVE demonstrates the most significant reductions across
+nearly all percentiles.
+For example, SIEVE reduces FIFO’s miss ratio by more than 42% on 10% of the traces (top whisker) with a mean of 21% on the one of the largest CDN company dataset. 
+As a comparison, all other algorithms have smaller reductions on this dataset.
+Compared to advanced algorithms, e.g., ARC, SIEVE reduces
+ARC miss ratio by up to 63.2% with a mean of 1.5%.
+
 
 <!-- While SIEVE excels with large caches, it faces competition at smaller sizes from algorithms like TwoQ and LHD. This is due to their ability to quickly discard low-value objects, a challenge for SIEVE when cache space is limited. However, at larger cache sizes, where real-world applications often operate, SIEVE consistently outperforms its peers. -->
 
@@ -98,10 +105,10 @@ Despite the varied ways LRU is implemented across these libraries - some opt for
 
 | Cache library | Language   | Lines   | Hour of Work   |
 | :---------: | :---------: |:---------: | :---------: |
-| [groupcache](https://github.com/golang/groupcache) | Golang  | 21  | <1  |
-| [mnemonist](https://github.com/Yomguithereal/mnemonist) | Javascript |12  |  1  |
-| [lru-rs](https://github.com/jeromefroe/lru-rs) | Rust | 16  |  1  |
-| [lru-dict](https://github.com/amitdev/lru-dict)| Python + C | 21  | <1  |
+| [groupcache](https://github.com/cacheMon/groupcache) | Golang  | 21  | <1  |
+| [mnemonist](https://github.com/cacheMon/mnemonist) | Javascript |12  |  1  |
+| [lru-rs](https://github.com/cacheMon/lru-rs) | Rust | 16  |  1  |
+| [lru-dict](https://github.com/cacheMon/lru-dict)| Python + C | 21  | <1  |
 
 </figure>
 
@@ -144,8 +151,9 @@ popular objects often intermingle with objects from scans.
 Consequently, both types of objects are rapidly evicted after insertion.
 
 [Marc's latest blog post](https://brooker.co.za/blog/2023/12/15/sieve.html) has explored the idea of making sieve scan-resistant by adding a small counter for each item.
-We're really excited to see how this plays out in the real world.
-If you're an engineer, a tech enthusiast, or just someone who enjoys playing around with systems, we'd absolutely love for you to give SIEVE a whirl in your setups.
+It shows some wins and losses on different workloads.
+We're really excited to see how this plays out in the real world. If you're an engineer, a tech enthusiast, or just someone who enjoys playing around with systems, we'd absolutely love for you to give SIEVE a whirl in your setups. 
+
 
 ## We'd Love to Hear from you
 As we wrap up this blog post, we would like to give a big shoutout to the people and organizations that open-sourced and shared the traces. We believe SIEVE presents an intriguing opportunity to explore and enhance the efficiency of web caching.
