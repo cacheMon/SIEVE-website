@@ -193,7 +193,7 @@ As we wrap up this blog post, we would like to give a big shoutout to the people
 ## Appendix
 
 <div id="sieve-cache-code">
-"`Python title=" SIEVE Python Implementation"
+```Python title="SIEVE Python Implementation"
 class Node:
     def __init__(self, value):
         self.value = value
@@ -220,14 +220,14 @@ class SieveCache:
             self.tail = node
 
     def _remove_node(self, node):
-        if node.Prev:
+        if node.prev:
             node.prev.next = node.next
         else:
             self.head = node.next
         if node.next:
-            node.next.prev = node.Prev
+            node.next.prev = node.prev
         else:
-            self.tail = node.Prev
+            self.tail = node.prev
 
     def _evict(self):
         obj = self.hand if self.hand else self.tail
