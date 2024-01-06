@@ -25,9 +25,16 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('https://api.github.com/repos/scalalang2/golang-fifo')
         .then(response => response.json())
         .then(data => {
-            document.getElementById('author-avatar').src = data.owner.avatar_url;
+            document.getElementById('golang-fifo').src = data.owner.avatar_url;
         })
         .catch(error => console.error('Error fetching author avatar:', error));
+    
+    fetch('https://api.github.com/repos/kurtextrem/js-sieve')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('js-sieve').src = data.owner.avatar_url;
+        })
+        .catch(error => console.error('Error fetching author avatar for js-sieve:', error));
 });
 
 function scrollToLearnMoreSection() {
