@@ -21,21 +21,35 @@ document.addEventListener('DOMContentLoaded', function() {
     showWord();
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('https://api.github.com/repos/scalalang2/golang-fifo')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('golang-fifo').src = data.owner.avatar_url;
-        })
-        .catch(error => console.error('Error fetching author avatar:', error));
+// document.addEventListener('DOMContentLoaded', function() {
+//     fetch('https://api.github.com/repos/scalalang2/golang-fifo')
+//         .then(response => response.json())
+//         .then(data => {
+//             document.getElementById('golang-fifo').src = data.owner.avatar_url;
+//         })
+//         .catch(error => console.error('Error fetching author avatar:', error));
     
-    fetch('https://api.github.com/repos/kurtextrem/js-sieve')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('js-sieve').src = data.owner.avatar_url;
-        })
-        .catch(error => console.error('Error fetching author avatar for js-sieve:', error));
-});
+//     fetch('https://api.github.com/repos/kurtextrem/js-sieve')
+//         .then(response => response.json())
+//         .then(data => {
+//             document.getElementById('js-sieve').src = data.owner.avatar_url;
+//         })
+//         .catch(error => console.error('Error fetching author avatar for js-sieve:', error));
+
+//     fetch('https://api.github.com/repos/linux-china/sieve-cache')
+//         .then(response => response.json())
+//         .then(data => {
+//             document.getElementById('java-sieve-cache').src = data.owner.avatar_url;
+//         })
+//         .catch(error => console.error('Error fetching author avatar for java-sieve-cache:', error));
+    
+//     fetch('https://api.github.com/repos/opencoff/go-sieve')
+//         .then(response => response.json())
+//         .then(data => {
+//             document.getElementById('go-sieve').src = data.owner.avatar_url;
+//         })
+//         .catch(error => console.error('Error fetching author avatar for go-sieve:', error));
+// });
 
 function scrollToLearnMoreSection() {
     const usageSection = document.getElementById('howwork');
