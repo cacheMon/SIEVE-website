@@ -12,7 +12,7 @@ categories:
 Caching is a method of storing temporary data for quick access to keep the online world running smoothly. But with limited space comes a critical decision: what to keep and discard. This is where **eviction algorithms** come into play. Our team recently designed a new cache eviction algorithm called **SIEVE**: it is very effective and simple with just one queue.
 
 - [Website](https://sievecache.com) 
-- [Paper](https://yazhuozhang.com/assets/pdf/nsdi24-sieve.pdf)
+- [Paper](https://junchengyang.com/publication/nsdi24-SIEVE.pdf)
 <!-- more -->
 
 ***Updates***: *The original writing style attracted considerable attention. We have updated the blog post for greater clarity and straightforwardness.* We also include an easy-to-reproduce result at [https://observablehq.com/@1a1a11a/sieve-miss-ratio-plots](https://observablehq.com/@1a1a11a/sieve-miss-ratio-plots). 
