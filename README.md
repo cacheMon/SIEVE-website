@@ -28,10 +28,12 @@ The landing page lives in `material/home.html`. Each adopter is one line using t
 `chip(name, link, avatar, tag)` macro defined just above the Adoption section:
 
 ```jinja
-{{ chip("ClickHouse", "https://github.com/ClickHouse/ClickHouse/pull/123435", "https://avatars.githubusercontent.com/ClickHouse?s=64") }}
+{{ chip("ClickHouse", "https://github.com/ClickHouse/ClickHouse/pull/123435", "https://avatars.githubusercontent.com/u/54801242?s=64&v=4") }}
 ```
 
 - Link to the code, merged PR or docs that show SIEVE in use, not just the project homepage.
-- Use `https://avatars.githubusercontent.com/<org>?s=64` for the avatar; it needs no redirect.
+- Use the id-based avatar URL, `https://avatars.githubusercontent.com/u/<id>?s=64&v=4`. The name-based
+  one returns a blank default for many organizations; `curl -sI https://github.com/<org>.png` shows the
+  id in the redirect (`/u/<id>`).
 - Open pull requests go under "In progress upstream" until they merge.
 - Keep the list in sync with the [cacheMon homepage](https://cachemon.org/#production).
