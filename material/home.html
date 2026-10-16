@@ -31,62 +31,175 @@
   }
 
   code[class="language-python"] {
-        font-size: 0.75rem;
+    font-size: 0.75rem;
   }
 
   code[class="language-javascript"] {
-        font-size: 0.75rem;
+    font-size: 0.75rem;
   }
-  
+
+  /* Hero buttons are links now, so they keep their button look */
+  a.btn-yellow, a.btn-yellow:hover {
+    text-decoration: none;
+  }
+
+  .award {
+    display: inline-block;
+    margin: 0 0 1.25rem;
+    padding: .25rem .75rem;
+    border: 1px solid rgba(234, 132, 78, .6);
+    border-radius: 999px;
+    color: #f3b48e;
+    font-size: .7rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+
+  /* How it works, in words */
+  .steps {
+    max-width: 44rem;
+    margin: 1rem auto 3rem;
+    padding: 0 1.5rem;
+    color: #333;
+    font-size: .85rem;
+    line-height: 1.6;
+  }
+  .steps li { margin-bottom: .5rem; }
+
+  /* Adoption: one wrapped row of chips per group */
+  .adopt {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 0 1.25rem 1rem;
+  }
+  .adopt-group { margin-top: 1.75rem; }
+  .adopt-group h3 {
+    margin: 0 0 .75rem;
+    color: #6b6460;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .adopt-group h3 span {
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .chips li { margin: 0; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .3rem .7rem .3rem .35rem;
+    border: 1px solid #e6dfd8;
+    border-radius: 999px;
+    background: #fff;
+    color: #222 !important;
+    font-size: .72rem;
+    line-height: 1.3;
+    text-decoration: none;
+    transition: border-color .15s, color .15s;
+  }
+  .chip:hover { border-color: #ec712f; color: #b8521b !important; }
+  .chip:focus-visible { outline: 2px solid #ec712f; outline-offset: 2px; }
+  .chip img {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    flex: none;
+    background: #f3efea;
+    object-fit: cover;
+  }
+  .chip .tag { color: #8a817a; font-size: .64rem; }
+  .chip--text { padding-left: .7rem; }
+  .adopt-note {
+    margin: 2rem 0 0;
+    color: #555;
+    font-size: .8rem;
+    text-align: center;
+  }
+  .adopt-note a { color: #c4561a; }
+
+  .more-links {
+    margin-top: 1rem;
+    color: #555;
+    font-size: .8rem;
+  }
+  .more-links a { color: #c4561a; }
+
+  /* Phones: headings and the diagram sized to the screen */
+  @media (max-width: 539px) {
+    .h1 { font-size: 2.1rem; }
+    .h1-2 { font-size: 2rem; }
+    .howdoeswork-img { width: 100%; }
+    .description { margin-left: 1.25rem; margin-right: 1.25rem; font-size: 1.1rem; }
+    .feature-image img { max-width: calc(100% - 2.5rem); margin-left: 1.25rem; margin-right: 1.25rem; }
+  }
 </style>
 
-<!--documetation-->
 <section class="section-dark-body w-100">
   <div class="md-grid conteiner-row pt-1 pt-lg-5 my-4">
     <div class="px-3 ctx-header-text conteiner">
       <div class="conteiner-row">
         <p class="h1 text-xs-center t-b">
-          <span style= "color:#ec5b0d;">SIEVE</span>
+          <span style="color:#ec5b0d;">SIEVE</span>
         </p>
       </div>
-      <img src="assets/images/logos/sieve-logo.svg"
+      <img src="assets/images/logos/sieve-logo.svg" alt=""
         class="laverage-header-img d-lg-none d-xl-none d-md-none d-sm-none d-xs-none mx-auto" />
-      <p class="h2-3 text-xs-center spacing t-b mb-5" style="font-family:Sans-serif; color:#ea844e;" id="animated-text"></p>
+      <p class="h2-3 text-xs-center spacing t-b mb-2" style="font-family:Sans-serif; color:#ea844e;" id="animated-text"></p>
+      <p class="text-xs-center"><span class="award">NSDI &rsquo;24 &middot; Community Award</span></p>
       <div class="conteiner-row conteiner-xs">
-        <button type="button" title="{{ page.next_page.title | e }}"
-        onclick="scrollToLearnMoreSection()"
+        <a href="#howwork"
           class="btn-yellow btn-xl-large btn-lg-large mx-2 mt-2 my-md-4 my-lg-4 my-xl-4 box-shadow">
           How it works
-        </button>
-        <button type="button" title="{{ page.next_page.title | e }}" 
-          onclick="window.open('https://junchengyang.com/publication/nsdi24-SIEVE.pdf', '_blank')"
+        </a>
+        <a href="https://www.usenix.org/conference/nsdi24/presentation/zhang-yazhuo" target="_blank" rel="noopener"
           class="btn-yellow btn-xl-large btn-lg-large mx-2 mt-2 my-md-4 my-lg-4 my-xl-4 box-shadow">
-          NSDI'24 Paper
-        </button>
-        <button type="button" title="{{ page.next_page.title | e }}" 
-          onclick="window.open('https://github.com/cacheMon/NSDI24-SIEVE', '_blank')"
+          NSDI&rsquo;24 Paper
+        </a>
+        <a href="https://github.com/cacheMon/NSDI24-SIEVE" target="_blank" rel="noopener"
           class="btn-yellow btn-xl-large btn-lg-large mx-2 mt-2 my-md-4 my-lg-4 my-xl-4 box-shadow">
-          Repo
-        </button>
+          Code
+        </a>
+        <a href="blog/2023/12/17/sieve-is-simpler-than-lru/"
+          class="btn-yellow btn-xl-large btn-lg-large mx-2 mt-2 my-md-4 my-lg-4 my-xl-4 box-shadow">
+          Blog post
+        </a>
       </div>
     </div>
     <div class="mt-4 pl-3">
-      <img src="assets/images/logos/sieve-front-image.svg" style="width: 80%; height: auto;"/>
+      <img src="assets/images/logos/sieve-front-image.svg" alt="" style="width: 80%; height: auto;"/>
     </div>
   </div>
 </section>
 
-<section class="section-white-body w-100" , id="howwork">
+<section class="section-white-body w-100" id="howwork">
   <div class="text-align-center t-b text-dark h1 mt-5">
     <p>How does SIEVE work?</p>
   </div>
   <div class="center-container my-2">
-    <img src="assets/images/illustrations/sieve_diagram.gif" class="howdoeswork-img my-xs-5 my-sm-5 my-md-5" />
+    <img src="assets/images/illustrations/sieve_diagram.gif" class="howdoeswork-img my-xs-5 my-sm-5 my-md-5"
+      alt="Animation of SIEVE: requests arrive, a hit sets an object's visited bit, and a hand moves from the tail toward the head to find an object to evict." />
   </div>
-
+  <ol class="steps">
+    <li><b>On a hit,</b> SIEVE sets the object&rsquo;s visited bit. Nothing moves.</li>
+    <li><b>On a miss,</b> the new object is inserted at the head of a single FIFO queue.</li>
+    <li><b>To evict,</b> a hand walks from the tail toward the head. It clears the visited bit of each object it
+      passes and evicts the first object whose bit was already clear, then stays there for the next eviction.</li>
+  </ol>
 </section>
 
-<section class="section-yellow-body w-100", id="keyfeatures">
+<section class="section-yellow-body w-100" id="keyfeatures">
   <div class="text-align-center t-b text-white h1 my-5">
     <p>Key Features</p>
   </div>
@@ -97,19 +210,18 @@
           <p class="description">SIEVE is easy to implement and can be easily integrated into existing systems. </p>
       </div>
       <div class="feature-image">
-          <!-- <img src="assets/images/illustrations/simplicity.svg" alt="Simplicity Graph"> -->
           <table style="margin:auto; border-collapse:collapse; width:82%; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);">
             <tr style="font-size: 0.9rem; background-color:white; color:black;">
               <th style="border:1px solid black; padding:10px; font-weight: bold;">Cache library</th>
               <th style="border:1px solid black; padding:10px; font-weight: bold;">Language</th>
               <th style="border:1px solid black; padding:10px; font-weight: bold;">Lines</th>
-              <th style="border:1px solid black; padding:10px; font-weight: bold;">Hour of work</th>
+              <th style="border:1px solid black; padding:10px; font-weight: bold;">Hours of work</th>
             </tr>
             <tr style="font-size: 0.8rem; background-color:white; color:black; text-align:center;">
               <td style="border:1px solid black; padding:10px;">
                 <a href="https://github.com/cacheMon/groupcache" style="color:#d6723c; text-decoration:none;">groupcache</a>
               </td>
-              <td style="border:1px solid black; padding:10px;">Golang</td>
+              <td style="border:1px solid black; padding:10px;">Go</td>
               <td style="border:1px solid black; padding:10px;">21</td>
               <td style="border:1px solid black; padding:10px;">&lt;1</td>
             </tr>
@@ -117,7 +229,7 @@
               <td style="border:1px solid black; padding:10px;">
                 <a href="https://github.com/cacheMon/mnemonist" style="color: #d6723c; text-decoration:none;">mnemonist</a>
               </td>
-              <td style="border:1px solid black; padding:10px;">Javascript</td>
+              <td style="border:1px solid black; padding:10px;">JavaScript</td>
               <td style="border:1px solid black; padding:10px;">12</td>
               <td style="border:1px solid black; padding:10px;">1</td>
             </tr>
@@ -125,8 +237,8 @@
               <td style="border:1px solid black; padding:10px;">
                 <a href="https://github.com/cacheMon/lru-rs" style="color: #d6723c; text-decoration:none;">lru-rs</a>
               </td>
-              <td style="border:1px solid black; padding:10px;;">Rust</td>
-              <td style="border:1px solid black; padding:10px;;">16</td>
+              <td style="border:1px solid black; padding:10px;">Rust</td>
+              <td style="border:1px solid black; padding:10px;">16</td>
               <td style="border:1px solid black; padding:10px;">1</td>
             </tr>
             <tr style="font-size: 0.8rem; background-color:white; color:black; text-align:center;">
@@ -139,7 +251,7 @@
             </tr>
           </table>
       </div>
-      
+
     </div>
     <div class="feature-container">
       <div class="feature-text">
@@ -148,7 +260,7 @@
         <p class="description" style="font-size: 0.8rem;"><br>*Miss ratio on a Zipfian dataset (&alpha;=1). </p>
       </div>
       <div class="feature-image">
-        <img src="assets/images/illustrations/zipf.svg" alt="Efficiency Graph">
+        <img src="assets/images/illustrations/zipf.svg" alt="Miss ratio of SIEVE and other algorithms on a Zipfian workload">
       </div>
     </div>
     <div class="feature-container">
@@ -159,231 +271,122 @@
           </p>
       </div>
       <div class="feature-image">
-          <img src="assets/images/illustrations/sieve_queue_all_large.svg" alt="Primitive Graph">
+          <img src="assets/images/illustrations/sieve_queue_all_large.svg" alt="Miss ratio reduction when SIEVE replaces LRU or FIFO inside other algorithms">
       </div>
     </div>
   </div>
 </section>
 
+{#- One chip per adopter. Each links to the code, merged PR or docs that show
+    SIEVE in use, the same evidence the cacheMon homepage cites. -#}
+{%- macro chip(name, href, img=None, tag=None) -%}
+<li><a class="chip{% if not img %} chip--text{% endif %}" href="{{ href }}" target="_blank" rel="noopener">
+  {%- if img %}<img src="{{ img }}" alt="" loading="lazy">{% endif -%}
+  {{ name }}{% if tag %} <span class="tag">{{ tag }}</span>{% endif %}</a></li>
+{%- endmacro %}
 
-<section class="section-white-body w-100" , id="adoption">
+<section class="section-white-body w-100" id="adoption">
   <div class="text-align-center t-b text-dark h1-2 mt-4">
     <p>Adoption</p>
   </div>
 
-  <div class="repo-container text-align-center t-500 text-dark h3 my-3">
-    <!-- <div class="inline-content mb-1"> -->
-      <!-- <p style="margin-right: 10px;">Companies:</p> -->
-      <!-- <p class="italic">to update</p> -->
-    <!-- </div> -->
-    <div class="inline-content mb-1">
-      <p style="margin-right: 10px;">Large systems:</p>
-      <a href="https://github.com/codenotary/immudb/pull/1971" target="_blank" class="repo_link">
-        <img src="https://avatars.githubusercontent.com/u/56740985?s=200&v=4" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/codenotary/immudb/pull/1971" target="_blank" class="repo_link">Immudb</a> &nbsp;&nbsp;
-
-      <a href="https://github.com/pingcap/tidb/blob/master/pkg/infoschema/sieve.go" target="_blank" class="repo_link">
-        <img src="https://avatars.githubusercontent.com/u/11855343?s=200&v=4" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/pingcap/tidb/blob/master/pkg/infoschema/sieve.go" target="_blank" class="repo_link">TiDB</a> &nbsp;&nbsp;
-
-      <a href="https://github.com/pelikan-io/pelikan" target="_blank" class="repo_link">
-        <img src="assets/images/avatars/pelikan.jpeg" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/pelikan-io/pelikan" target="_blank" class="repo_link">Pelikan</a> &nbsp;&nbsp;
-
-      <a href="https://github.com/nyrkio/nyrkio/blob/main/backend/core/sieve.py" target="_blank" class="repo_link">
-        <img src="https://avatars.githubusercontent.com/u/94254?v=4" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/nyrkio/nyrkio/blob/main/backend/core/sieve.py" target="_blank" class="repo_link">Nyrkiö</a> &nbsp;&nbsp;
-
-      <a href="https://github.com/skift-org/skift/blob/main/src/libs/karm-base/sieve.h" target="_blank" class="repo_link">
-        <img src="https://avatars.githubusercontent.com/u/46500022?s=200&v=4" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/skift-org/skift/blob/main/src/libs/karm-base/sieve.h" target="_blank" class="repo_link">SkiftOS</a> &nbsp;&nbsp;
-
-      <!-- <a href="https://github.com/dragonflydb/dragonfly/blob/main/src/core/compact_object.h#L124" target="_blank" class="repo_link">
-        <img src="assets/images/avatars/pelikan.jpeg" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/dragonflydb/dragonfly/blob/main/src/core/compact_object.h#L124" target="_blank" class="repo_link">DragonFly</a> -->
-
-      <a href="https://github.com/dragonflydb/dragonfly/blob/main/src/core/compact_object.h#L124" target="_blank" class="repo_link">
-        <img src="https://avatars.githubusercontent.com/u/104819355?s=200&v=4" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/dragonflydb/dragonfly/blob/main/src/core/compact_object.h#L124" target="_blank" class="repo_link">DragonFly</a> &nbsp;&nbsp;
-
-      </div>
-      <div class="inline-content mb-1">
-      <a href="https://github.com/DNSCrypt/dnscrypt-proxy/blob/master/dnscrypt-proxy/plugin_cache.go" target="_blank" class="repo_link">
-        <img src="https://avatars.githubusercontent.com/u/34526273?s=200&v=4" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/DNSCrypt/dnscrypt-proxy/blob/master/dnscrypt-proxy/plugin_cache.go" target="_blank" class="repo_link">DNSCrypt-proxy</a> &nbsp;&nbsp;
-
-      <a href="https://github.com/DNSCrypt/encrypted-dns-server/blob/master/src/cache.rs" target="_blank" class="repo_link">
-        <img src="https://avatars.githubusercontent.com/u/34526273?s=200&v=4" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/DNSCrypt/encrypted-dns-server/blob/master/src/cache.rs" target="_blank" class="repo_link">encrypted-dns-resolver</a> &nbsp;&nbsp;
-
-      <a href="https://docs.postgrest.org/en/latest/references/auth.html#jwt-cache" target="_blank" class="repo_link">
-        <img src="assets/images/avatars/PostgREST_logo.png" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://docs.postgrest.org/en/latest/references/auth.html#jwt-cache" target="_blank" class="repo_link">PostgREST</a> &nbsp;&nbsp;
-
-      <a href="https://github.com/ceph/ceph/blob/main/src/common/web_cache.h" target="_blank" class="repo_link">
-        <img src="assets/images/avatars/Ceph_logo.png" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/ceph/ceph/blob/main/src/common/web_cache.h" target="_blank" class="repo_link">Ceph</a> &nbsp;&nbsp;
-
-
+  <div class="adopt">
+    <div class="adopt-group">
+      <h3>Systems running SIEVE</h3>
+      <ul class="chips">
+        {{ chip("ClickHouse", "https://github.com/ClickHouse/ClickHouse/pull/123435", "https://avatars.githubusercontent.com/ClickHouse?s=64") }}
+        {{ chip("TiDB", "https://github.com/pingcap/tidb/blob/master/pkg/infoschema/sieve.go", "https://avatars.githubusercontent.com/pingcap?s=64") }}
+        {{ chip("Ceph", "https://github.com/ceph/ceph/blob/main/src/common/web_cache.h", "assets/images/avatars/Ceph_logo.png") }}
+        {{ chip("BIND 9", "https://www.isc.org/blogs/2025-sieve/", "https://avatars.githubusercontent.com/isc-projects?s=64") }}
+        {{ chip("Apache Druid", "https://github.com/apache/druid/pull/18176", "https://avatars.githubusercontent.com/apache?s=64") }}
+        {{ chip("Apache Ignite", "https://github.com/apache/ignite-3/pull/7599", "https://avatars.githubusercontent.com/apache?s=64") }}
+        {{ chip("Jetpack Compose", "https://github.com/androidx/androidx/blob/androidx-main/compose/ui/ui-text/src/androidMain/kotlin/androidx/compose/ui/text/platform/AndroidFontListTypeface.android.kt", "https://avatars.githubusercontent.com/androidx?s=64") }}
+        {{ chip("DragonflyDB", "https://github.com/dragonflydb/dragonfly/blob/main/src/core/compact_object.h#L124", "https://avatars.githubusercontent.com/dragonflydb?s=64") }}
+        {{ chip("Turso", "https://github.com/tursodatabase/turso/blob/main/core/storage/page_cache.rs", "https://avatars.githubusercontent.com/tursodatabase?s=64") }}
+        {{ chip("Deep Graph Library", "https://github.com/dmlc/dgl/blob/master/python/dgl/graphbolt/impl/cpu_feature_cache.py", "https://avatars.githubusercontent.com/dmlc?s=64") }}
+        {{ chip("Mooncake", "https://github.com/kvcache-ai/Mooncake/blob/main/docs/source/design/transfer-engine/index.md", "https://avatars.githubusercontent.com/kvcache-ai?s=64") }}
+        {{ chip("TanStack Router", "https://github.com/TanStack/router/blob/main/packages/router-core/src/sieve-cache.ts", "https://avatars.githubusercontent.com/TanStack?s=64") }}
+        {{ chip("h3", "https://github.com/h3js/h3/pull/1543", "https://avatars.githubusercontent.com/h3js?s=64") }}
+        {{ chip("PostgREST", "https://docs.postgrest.org/en/latest/references/auth.html#jwt-cache", "assets/images/avatars/PostgREST_logo.png") }}
+        {{ chip("Yandex Odyssey", "https://github.com/yandex/odyssey/blob/master/docs/configuration/rules.md", "https://avatars.githubusercontent.com/yandex?s=64") }}
+        {{ chip("KurrentDB", "https://github.com/kurrent-io/KurrentDB/blob/master/src/KurrentDB.Security.EncryptionAtRest/Transforms/DataStructures/SieveBlockCache.cs", "https://avatars.githubusercontent.com/kurrent-io?s=64") }}
+        {{ chip("Apache Jackrabbit Oak", "https://github.com/apache/jackrabbit-oak/blob/trunk/oak-run-commons/src/main/java/org/apache/jackrabbit/oak/index/indexer/document/tree/store/utils/SieveCache.java", "https://avatars.githubusercontent.com/apache?s=64") }}
+        {{ chip("immudb", "https://github.com/codenotary/immudb/pull/1971", "https://avatars.githubusercontent.com/codenotary?s=64") }}
+        {{ chip("Redpanda Operator", "https://github.com/redpanda-data/redpanda-operator/blob/main/operator/pkg/admin/admin.go", "https://avatars.githubusercontent.com/redpanda-data?s=64") }}
+        {{ chip("Perkeep", "https://github.com/perkeep/perkeep/blob/master/pkg/blobserver/diskpacked/fdcache.go", "https://avatars.githubusercontent.com/perkeep?s=64") }}
+        {{ chip("dnscrypt-proxy", "https://github.com/DNSCrypt/dnscrypt-proxy/blob/master/dnscrypt-proxy/plugin_cache.go", "https://avatars.githubusercontent.com/DNSCrypt?s=64") }}
+        {{ chip("encrypted-dns-server", "https://github.com/DNSCrypt/encrypted-dns-server/blob/master/src/cache.rs", "https://avatars.githubusercontent.com/DNSCrypt?s=64") }}
+        {{ chip("Durable Streams", "https://github.com/durable-streams/durable-streams/blob/main/packages/server/src/file-store.ts", "https://avatars.githubusercontent.com/durable-streams?s=64") }}
+        {{ chip("Pelikan", "https://github.com/pelikan-io/pelikan", "assets/images/avatars/pelikan.jpeg") }}
+        {{ chip("skiftOS", "https://github.com/skift-org/karm/blob/main/src/karm-core/base/sieve.cpp", "https://avatars.githubusercontent.com/skift-org?s=64") }}
+        {{ chip("Nyrkiö", "https://github.com/nyrkio/nyrkio/blob/main/backend/core/sieve.py", "https://avatars.githubusercontent.com/nyrkio?s=64") }}
+      </ul>
     </div>
-    <div class="inline-content mb-1">
-      <p style="margin-right: 10px;">Cache libraries:</p>
 
-      <a href="https://github.com/patriksima/SieveCache" target="_blank" class="repo_link">
-        <img src="https://avatars.githubusercontent.com/u/172640?v=4&size=64" alt="Patrik Sima" class="author-avatar">
-      </a>
-      <a href="https://github.com/patriksima/SieveCache" target="_blank" class="repo_link">SieveCache</a> &nbsp;&nbsp;
-      
-      <a href="https://github.com/scalalang2/golang-fifo" target="_blank" class="repo_link">
-        <img src="assets/images/avatars/scalalang2.jpeg" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/scalalang2/golang-fifo" target="_blank" class="repo_link">golang-fifo</a> &nbsp;&nbsp;
-      
-      <a href="https://github.com/kurtextrem/js-sieve" target="_blank" class="repo_link"> 
-        <img src="assets/images/avatars/kurtextrem.jpeg" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/kurtextrem/js-sieve" target="_blank" class="repo_link">js-sieve</a> &nbsp;&nbsp;
-
-      <a href="https://crates.io/crates/sieve-cache" target="_blank" class="repo_link"> 
-        <img src="assets/images/avatars/jedisct1.jpeg" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://crates.io/crates/sieve-cache" target="_blank" class="repo_link">rust-sieve-cache</a> &nbsp;&nbsp;
-
-      <a href="https://pkg.go.dev/github.com/opencoff/go-sieve" target="_blank" class="repo_link"> 
-        <img src="assets/images/avatars/opencoff.jpeg" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://pkg.go.dev/github.com/opencoff/go-sieve" target="_blank" class="repo_link">go-sieve</a> &nbsp;&nbsp;
-
+    <div class="adopt-group">
+      <h3>In progress upstream <span>&mdash; open pull requests</span></h3>
+      <ul class="chips">
+        {{ chip("PowerDNS dnsdist", "https://github.com/PowerDNS/pdns/pull/16692", "https://avatars.githubusercontent.com/PowerDNS?s=64") }}
+        {{ chip("Salsa (rust-analyzer)", "https://github.com/salsa-rs/salsa/pull/1226", "https://avatars.githubusercontent.com/salsa-rs?s=64") }}
+        {{ chip("CacheLib", "https://github.com/facebook/CacheLib/pull/336", "https://avatars.githubusercontent.com/facebook?s=64") }}
+      </ul>
     </div>
-    <div class="inline-content mb-1">
-      <a href="https://github.com/thelibrarian/sieve_cache" target="_blank" class="repo_link"> 
-        <img src="assets/images/avatars/thelibrarian.jpeg" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/thelibrarian/sieve_cache" target="_blank" class="repo_link">sieve_cache (Ruby)</a> &nbsp;&nbsp;
 
-      <a href="https://github.com/tensorush/zig-sieve" target="_blank" class="repo_link"> 
-        <img src="assets/images/avatars/tensorush.png" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/tensorush/zig-sieve" target="_blank" class="repo_link">zig-sieve (Zig)</a> &nbsp;&nbsp;
-
-      <a href="https://github.com/nixberg/sieve-swift" target="_blank" class="repo_link"> 
-        <img src="https://avatars.githubusercontent.com/u/310825?v=4" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/nixberg/sieve-swift" target="_blank" class="repo_link">sieve (Swift)</a> &nbsp;&nbsp;
-
-      <a href="https://github.com/kubo39/sieve-cache-d" target="_blank" class="repo_link">
-        <img src="assets/images/avatars/kubo39.jpeg" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/kubo39/sieve-cache-d" target="_blank" class="repo_link">sieve-cache-d (D)</a> &nbsp;&nbsp;
-      
-      <a href="https://github.com/kassane/sieve-cache-cpp" target="_blank" class="repo_link">
-        <img src="assets/images/avatars/kassane.jpeg" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/kassane/sieve-cache-cpp" target="_blank" class="repo_link">sieve-cache-cpp (C++)</a> &nbsp;&nbsp;
-      
+    <div class="adopt-group">
+      <h3>Cache libraries</h3>
+      <ul class="chips">
+        {{ chip("Android Jetpack", "https://developer.android.com/reference/kotlin/androidx/collection/SieveCache", "https://avatars.githubusercontent.com/androidx?s=64", "Kotlin") }}
+        {{ chip("DotNext", "https://github.com/dotnet/dotNext/blob/master/src/DotNext.Threading/Runtime/Caching/RandomAccessCache.Eviction.cs", "https://avatars.githubusercontent.com/dotnet?s=64", "C#") }}
+        {{ chip("sieve-cache", "https://crates.io/crates/sieve-cache", "assets/images/avatars/jedisct1.jpeg", "Rust") }}
+        {{ chip("golang-fifo", "https://github.com/scalalang2/golang-fifo", "assets/images/avatars/scalalang2.jpeg", "Go") }}
+        {{ chip("go-sieve", "https://pkg.go.dev/github.com/opencoff/go-sieve", "assets/images/avatars/opencoff.jpeg", "Go") }}
+        {{ chip("samber/hot", "https://github.com/samber/hot", "https://avatars.githubusercontent.com/samber?s=64", "Go") }}
+        {{ chip("@neophi/sieve-cache", "https://github.com/NeoPhi/sieve-cache", "https://avatars.githubusercontent.com/u/721316?v=4", "TypeScript") }}
+        {{ chip("js-sieve", "https://github.com/kurtextrem/js-sieve", "assets/images/avatars/kurtextrem.jpeg", "JavaScript") }}
+        {{ chip("sieve", "https://github.com/zweifisch/sieve", "https://avatars.githubusercontent.com/zweifisch?s=64", "TypeScript") }}
+        {{ chip("sieve-cache", "https://github.com/tiberiualex/sieve-cache", "https://avatars.githubusercontent.com/u/8195022?v=4", "JavaScript") }}
+        {{ chip("Hutool", "https://github.com/chinabugotech/hutool/pull/4157", "https://avatars.githubusercontent.com/chinabugotech?s=64", "Java, v7 dev") }}
+        {{ chip("sieve-cache", "https://github.com/linux-china/sieve-cache", "assets/images/avatars/linux-china.png", "Java") }}
+        {{ chip("SieveCache", "https://github.com/patriksima/SieveCache", "https://avatars.githubusercontent.com/u/172640?v=4&size=64", "C#") }}
+        {{ chip("SIEVE", "https://github.com/lostmsu/SIEVE", "https://avatars.githubusercontent.com/u/239520?v=4", "C#") }}
+        {{ chip("sieve-cache-cpp", "https://github.com/kassane/sieve-cache-cpp", "assets/images/avatars/kassane.jpeg", "C++") }}
+        {{ chip("sieve-cache-d", "https://github.com/kubo39/sieve-cache-d", "assets/images/avatars/kubo39.jpeg", "D") }}
+        {{ chip("sieve.cache", "https://github.com/daipham3213/sieve.cache", "https://avatars.githubusercontent.com/u/83876166?v=4", "Python") }}
+        {{ chip("sieve-cache-in-rust", "https://github.com/ankitsheoran1/sieve-cache-in-rust", "https://avatars.githubusercontent.com/u/33404702?v=4", "Rust") }}
+        {{ chip("sieve_cache", "https://github.com/thelibrarian/sieve_cache", "assets/images/avatars/thelibrarian.jpeg", "Ruby") }}
+        {{ chip("sieve-swift", "https://github.com/nixberg/sieve-swift", "https://avatars.githubusercontent.com/nixberg?s=64", "Swift") }}
+        {{ chip("sieve_cache", "https://github.com/lost22git/sieve_cache", "https://avatars.githubusercontent.com/u/65008815?v=4", "Nim") }}
+        {{ chip("sieve", "https://github.com/alanwang67/sieve", "https://avatars.githubusercontent.com/u/33503035?v=4", "Elixir") }}
+      </ul>
     </div>
-    <div class="inline-content mb-1">
-      <a href="https://github.com/tiberiualex/sieve-cache" target="_blank" class="repo_link">
-        <img src="https://avatars.githubusercontent.com/u/8195022?v=4" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/tiberiualex/sieve-cache" target="_blank" class="repo_link">sieve (JavaScript)</a> &nbsp;&nbsp;
 
-      <a href="https://github.com/alanwang67/sieve" target="_blank" class="repo_link"> 
-        <img src="https://avatars.githubusercontent.com/u/33503035?v=4" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/alanwang67/sieve" target="_blank" class="repo_link">sieve (Elixir)</a> &nbsp;&nbsp;
-
-      <a href="https://github.com/lost22git/sieve_cache" target="_blank" class="repo_link"> 
-        <img src="https://avatars.githubusercontent.com/u/65008815?v=4" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/lost22git/sieve_cache" target="_blank" class="repo_link">sieve (Nim)</a> &nbsp;&nbsp;
-
-      <a href="https://github.com/lostmsu/SIEVE" target="_blank" class="repo_link"> 
-        <img src="https://avatars.githubusercontent.com/u/239520?v=4" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/lostmsu/SIEVE" target="_blank" class="repo_link">SIEVE (C#)</a> &nbsp;&nbsp;
-
+    <div class="adopt-group">
+      <h3>Written about in</h3>
+      <ul class="chips">
+        {{ chip("Marc Brooker’s blog", "https://brooker.co.za/blog/2023/12/15/sieve.html") }}
+        {{ chip("ISC blog", "https://www.isc.org/blogs/2025-sieve/") }}
+        {{ chip("APNIC blog", "https://blog.apnic.net/2025/08/05/sieve-a-better-algorithm-than-lru/") }}
+        {{ chip(";login:", "https://www.usenix.org/publications/loginonline/sieve-cache-eviction-can-be-simple-effective-and-scalable") }}
+        {{ chip("Live Science", "https://www.livescience.com/technology/communications/remarkable-sieve-algorithm-speed-up-web-browsing-google-meta-interested") }}
+        {{ chip("Slashdot", "https://developers.slashdot.org/story/24/06/30/2337238/caching-is-key-and-sieve-is-better-than-lru") }}
+        {{ chip("TL;DR", "https://tldr.tech/tech/2024-01-04") }}
+        {{ chip("Wikipedia", "https://en.wikipedia.org/wiki/Cache_replacement_policies") }}
+        {{ chip("Latency (Manning)", "https://p99conf.io/2026/05/20/cache-replacement-strategies/") }}
+        {{ chip("Tech Explorist", "https://www.techexplorist.com/revolutionizing-web-caching-simple-method-speed-cache-sifting/80899/") }}
+        {{ chip("BBConf", "https://bbconf.kr/archive/", None, "Korean") }}
+        {{ chip("Rate Labs blog", "https://medium.com/rate-labs/%EC%96%B4%EB%96%A4-%EC%86%8C%EA%B0%80-%EC%9D%BC%EC%9D%84-%EB%8D%94-%EC%9E%98%ED%95%A9%EB%8B%88%EA%B9%8C-fifo%EA%B0%80-lru%EB%B3%B4%EB%8B%A4-%EB%82%AB%EC%8A%B5%EB%8B%88%EB%8B%A4%EC%9A%94-1a49b9060ce4", None, "Korean") }}
+        {{ chip("IEPG talk", "https://www.youtube.com/watch?v=HIrgi2JUQh8&t=5462s") }}
+      </ul>
     </div>
-    <div class="inline-content mb-1">
-      <a href="https://github.com/linux-china/sieve-cache" target="_blank" class="repo_link"> 
-        <img src="assets/images/avatars/linux-china.png" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/linux-china/sieve-cache" target="_blank" class="repo_link">sieve-cache (Java)</a> &nbsp;&nbsp;
 
-      <a href="https://github.com/daipham3213/sieve.cache" target="_blank" class="repo_link"> 
-        <img src="https://avatars.githubusercontent.com/u/83876166?v=4" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/daipham3213/sieve.cache" target="_blank" class="repo_link">sieve (Python)</a> &nbsp;&nbsp;
-
-      <a href="https://github.com/ankitsheoran1/sieve-cache-in-rust" target="_blank" class="repo_link"> 
-        <img src="https://avatars.githubusercontent.com/u/33404702?v=4" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/ankitsheoran1/sieve-cache-in-rust" target="_blank" class="repo_link">sieve-cache-in-rust</a> &nbsp;&nbsp;
-
-      <a href="https://github.com/NeoPhi/sieve-cache" target="_blank" class="repo_link"> 
-        <img src="https://avatars.githubusercontent.com/u/721316?v=4" alt="Author's Avatar" class="author-avatar">
-      </a>
-      <a href="https://github.com/NeoPhi/sieve-cache" target="_blank" class="repo_link">sieve-cache (JavaScript)</a> &nbsp;&nbsp;
-      
-
-    </div>
-    <div class="inline-content mb-1">
-      <!-- <a href="https://github.com/lostmsu/SIEVE" target="_blank" class="repo_link"> SIEVE (C#) 
-      </a>,&nbsp;&nbsp; -->
-      <a href="https://github.com/zweifisch/sieve" target="_blank" class="repo_link"> sieve (typescrpt)
-      </a> &nbsp;&nbsp;
-      <!-- <a href="https://github.com/crrow/gosieve" target="_blank" class="repo_link"> gosieve
-      </a> -->
-      <a href="https://github.com/samber/hot" target="_blank" class="repo_link">samber/hot (Go)</a> &nbsp;&nbsp;
-    </div>
-    <div class="inline-content mb-1">
-      <p>Let us know if you want to be featured here!</p>
-
-    </div>
-    <div class="inline-content mb-1">
-      <p style="margin-right: 10px;">Media coverage:</p>
-      <a href="https://brooker.co.za/blog/2023/12/15/sieve.html" target="_blank" class="repo_link">Marc's Blog</a>
-      <p>, </p>
-      <a href="https://tldr.tech/tech/2024-01-04" target="_blank" class="repo_link" style="margin-left: 5px;">TL;DR</a>
-      <p>, </p>
-      <a href="https://ftp.yuni.dev/bbconf/2023-winter/LDH_SIEVE_S3_FIFO_Cache_%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0_%EC%86%8C%EA%B0%9C.pdf" target="_blank" class="repo_link"  style="margin-left: 5px;">BBConf (Korean)</a>
-      <p>, </p>
-      <a href="https://www.livescience.com/technology/communications/remarkable-sieve-algorithm-speed-up-web-browsing-google-meta-interested" target="_blank" class="repo_link" style="margin-left: 5px;">Live Science</a>
-      <p>, </p>
-      <a href="https://digitaldaze.io/the-sieve-caching-algorithm" target="_blank" class="repo_link" style="margin-left: 5px;">Digital Daze</a>
-      <p>, </p>
-      <a href="https://bnnbreaking.com/tech/sieve-the-new-open-source-algorithm-transforming-web-browsing" target="_blank" class="repo_link" style="margin-left: 5px;">BNN Speaking</a>
-      <p>, </p>
-      <a href="https://www.techexplorist.com/revolutionizing-web-caching-simple-method-speed-cache-sifting/80899/" target="_blank" class="repo_link" style="margin-left: 5px;">Tech Explorist</a>
-      <p>, </p>
-      <a href="https://medium.com/rate-labs/%EC%96%B4%EB%96%A4-%EC%86%8C%EA%B0%80-%EC%9D%BC%EC%9D%84-%EB%8D%94-%EC%9E%98%ED%95%A9%EB%8B%88%EA%B9%8C-fifo%EA%B0%80-lru%EB%B3%B4%EB%8B%A4-%EB%82%AB%EC%8A%B5%EB%8B%88%EB%8B%A4%EC%9A%94-1a49b9060ce4"  target="_blank" class="repo_link" style="margin-left: 5px;"> blog (Korean)</a>
-      <p>
-      </div>
-      <div class="inline-content mb-1">
-      </p>
-      <a href="https://www.youtube.com/watch?v=HIrgi2JUQh8&t=5462s" target="_blank" class="repo_link" style="margin-left: 5px;"> Talk at IEPG - Internet Engineering and Planning Group</a>
-    </div>
-    <!-- <div class="inline-content mb-1">
-      <p style="margin-right: 10px;">Other libraries:</p>
-    </div> -->
-
-    <p class="mt-3 italic">We would love to hear your experience!</p>
+    <p class="adopt-note">
+      Shipped SIEVE somewhere? <a href="mailto:cachemon.org@gmail.com">Tell us</a> &mdash; we would love to list you,
+      and to hear how it went.
+    </p>
   </div>
-
 </section>
 
-<section class="section-white-body w-100" , id="sponsors">
+<section class="section-white-body w-100" id="sponsors">
   <div class="text-align-center t-b text-dark h1-2 mt-4">
     <p>Acknowledgement</p>
   </div>
@@ -391,29 +394,34 @@
   <div class="text-align-center t-500 text-dark h3 my-3">
     <p><span class="t-b italic h2-2">Sponsors:</span><br>
       <a href="https://csd.cmu.edu/" target="_blank" class="custom-link-text">Carnegie Mellon University</a> <a href="https://www.pdl.cmu.edu/index.shtml" target="_blank" class="custom-link-text">Parallel Data Laboratory</a>
-      <a href="https://www.cs.emory.edu/home/" target="_blank" class="custom-link-text">Emory University</a> <a href="https://simbiosys.mathcs.emory.edu/home" target="_blank" class="custom-link-text">SimBioSys Lab</a><br>
+      <a href="https://www.cs.emory.edu/home/" target="_blank" class="custom-link-text">Emory University</a> SimBioSys Lab<br>
       Meta, Google, AWS, Microsoft, CloudLab, NSF, Sloan Foundation and VMware</p><br>
-    <p><span class="t-b italic h2-2">Dataset source:</span><br> 
+    <p><span class="t-b italic h2-2">Dataset source:</span><br>
       Meta, Tencent, Wikimedia, Twitter</p>
   </div>
 
 </section>
 
 
-<section class="section-white-body w-100" , id="contactus">
+<section class="section-white-body w-100" id="contactus">
   <div class="text-align-center t-b text-dark h1-2 mt-4">
     <p>Contact Us</p>
   </div>
 
   <div class="text-align-center t-500 text-dark h3 mt-3 mb-5">
-    <a href="mailto:cachemon.org@gmail.com" target="_blank" class="custom-link">
+    <a href="mailto:cachemon.org@gmail.com" target="_blank" class="custom-link" aria-label="Email">
       <i class="fa-solid fa-envelope fa-2x"></i></a>
-    <a href="https://join.slack.com/t/cachemon/shared_invite/zt-20pjil08z-f9d1Ui~p1gfBnsedHP9x8Q" target="_blank" class="custom-link">
+    <a href="https://join.slack.com/t/cachemon/shared_invite/zt-20pjil08z-f9d1Ui~p1gfBnsedHP9x8Q" target="_blank" class="custom-link" aria-label="Slack">
       <i class="fa-brands fa-slack fa-2x"></i></a>
-    <a href="https://twitter.com/cachemon_org" target="_blank" class="custom-link">
+    <a href="https://twitter.com/cachemon_org" target="_blank" class="custom-link" aria-label="X (Twitter)">
       <i class="fa-brands fa-twitter fa-2x"></i></a>
-    <a href="https://github.com/cacheMon" target="_blank" class="custom-link">
+    <a href="https://github.com/cacheMon" target="_blank" class="custom-link" aria-label="GitHub">
       <i class="fa-brands fa-github fa-2x"></i></a>
+    <p class="more-links">
+      More from cacheMon: <a href="https://s3fifo.com">S3-FIFO</a> &middot;
+      <a href="https://libcachesim.com">libCacheSim</a> &middot;
+      <a href="https://cachemon.org">cachemon.org</a>
+    </p>
   </div>
 
 </section>
