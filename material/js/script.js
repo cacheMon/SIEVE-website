@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const words = sentence.split("");
     let i = 0;
     const container = document.getElementById('animated-text');
+    if (!container) return;   // only the home page has the typed subtitle
 
     function showWord() {
         if (i < words.length) {
