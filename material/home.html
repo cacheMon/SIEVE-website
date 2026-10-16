@@ -1,429 +1,446 @@
-{% extends "main-styles.html" %}
+{% extends "main.html" %}
 
-<!-- Render hero under tabs -->
-{% block tabs %}
-{{ super() }}
+{% block extrahead %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ 'home.css' | url }}">
+{% endblock %}
 
-<!-- Hero for landing page -->
-<style>
-  .md-header {
-    position: sticky
-  }
+{#- Adopters, as (name, link, logo, note). Each link points to the code, merged
+    pull request or docs that show SIEVE in use, the same evidence the cacheMon
+    homepage cites. The logo is a GitHub account id, or a path to an image in
+    docs/assets. Headings count the rows, so adding a row is all it takes. -#}
+{%- set systems = [
+  ("ClickHouse", "https://github.com/ClickHouse/ClickHouse/pull/123435", 54801242),
+  ("TiDB", "https://github.com/pingcap/tidb/blob/master/pkg/infoschema/sieve.go", 11855343),
+  ("Ceph", "https://github.com/ceph/ceph/blob/main/src/common/web_cache.h", "assets/images/avatars/Ceph_logo.png"),
+  ("BIND 9", "https://www.isc.org/blogs/2025-sieve/", 3965132),
+  ("Apache Druid", "https://github.com/apache/druid/pull/18176", 47359),
+  ("Apache Ignite", "https://github.com/apache/ignite-3/pull/7599", 47359),
+  ("Jetpack Compose", "https://github.com/androidx/androidx/blob/androidx-main/compose/ui/ui-text/src/androidMain/kotlin/androidx/compose/ui/text/platform/AndroidFontListTypeface.android.kt", 6955922),
+  ("DragonflyDB", "https://github.com/dragonflydb/dragonfly/blob/main/src/core/compact_object.h#L124", 104819355),
+  ("Turso", "https://github.com/tursodatabase/turso/blob/main/core/storage/page_cache.rs", 139391156),
+  ("Deep Graph Library", "https://github.com/dmlc/dgl/blob/master/python/dgl/graphbolt/impl/cpu_feature_cache.py", 11508361),
+  ("Mooncake", "https://github.com/kvcache-ai/Mooncake/blob/main/docs/source/design/transfer-engine/index.md", 170996193),
+  ("TanStack Router", "https://github.com/TanStack/router/blob/main/packages/router-core/src/sieve-cache.ts", 72518640),
+  ("h3", "https://github.com/h3js/h3/pull/1543", 208435796),
+  ("PostgREST", "https://docs.postgrest.org/en/latest/references/auth.html#jwt-cache", "assets/images/avatars/PostgREST_logo.png"),
+  ("Yandex Odyssey", "https://github.com/yandex/odyssey/blob/master/docs/configuration/rules.md", 7409213),
+  ("KurrentDB", "https://github.com/kurrent-io/KurrentDB/blob/master/src/KurrentDB.Security.EncryptionAtRest/Transforms/DataStructures/SieveBlockCache.cs", 1628864),
+  ("Apache Jackrabbit Oak", "https://github.com/apache/jackrabbit-oak/blob/trunk/oak-run-commons/src/main/java/org/apache/jackrabbit/oak/index/indexer/document/tree/store/utils/SieveCache.java", 47359),
+  ("immudb", "https://github.com/codenotary/immudb/pull/1971", 56740985),
+  ("Redpanda Operator", "https://github.com/redpanda-data/redpanda-operator/blob/main/operator/pkg/admin/admin.go", 49406389),
+  ("Perkeep", "https://github.com/perkeep/perkeep/blob/master/pkg/blobserver/diskpacked/fdcache.go", 34562864),
+  ("dnscrypt-proxy", "https://github.com/DNSCrypt/dnscrypt-proxy/blob/master/dnscrypt-proxy/plugin_cache.go", 34526273),
+  ("encrypted-dns-server", "https://github.com/DNSCrypt/encrypted-dns-server/blob/master/src/cache.rs", 34526273),
+  ("Durable Streams", "https://github.com/durable-streams/durable-streams/blob/main/packages/server/src/file-store.ts", 247893940),
+  ("Pelikan", "https://github.com/pelikan-io/pelikan", "assets/images/avatars/pelikan.jpeg"),
+  ("skiftOS", "https://github.com/skift-org/karm/blob/main/src/karm-core/base/sieve.cpp", 46500022),
+  ("Nyrkiö", "https://github.com/nyrkio/nyrkio/blob/main/backend/core/sieve.py", 148359131),
+] -%}
+{%- set in_progress = [
+  ("PowerDNS dnsdist", "https://github.com/PowerDNS/pdns/pull/16692", 1282630),
+  ("Salsa (rust-analyzer)", "https://github.com/salsa-rs/salsa/pull/1226", 43751271),
+  ("CacheLib", "https://github.com/facebook/CacheLib/pull/336", 69631),
+] -%}
+{%- set libraries = [
+  ("Android Jetpack", "https://developer.android.com/reference/kotlin/androidx/collection/SieveCache", 6955922, "Kotlin"),
+  ("DotNext", "https://github.com/dotnet/dotNext/blob/master/src/DotNext.Threading/Runtime/Caching/RandomAccessCache.Eviction.cs", 9141961, "C#"),
+  ("sieve-cache", "https://crates.io/crates/sieve-cache", "assets/images/avatars/jedisct1.jpeg", "Rust"),
+  ("golang-fifo", "https://github.com/scalalang2/golang-fifo", "assets/images/avatars/scalalang2.jpeg", "Go"),
+  ("go-sieve", "https://pkg.go.dev/github.com/opencoff/go-sieve", "assets/images/avatars/opencoff.jpeg", "Go"),
+  ("samber/hot", "https://github.com/samber/hot", 2951285, "Go"),
+] -%}
+{%- set implementations = [
+  ("@neophi/sieve-cache", "https://github.com/NeoPhi/sieve-cache", 721316, "TypeScript"),
+  ("js-sieve", "https://github.com/kurtextrem/js-sieve", "assets/images/avatars/kurtextrem.jpeg", "JavaScript"),
+  ("sieve", "https://github.com/zweifisch/sieve", 447862, "TypeScript"),
+  ("sieve-cache", "https://github.com/tiberiualex/sieve-cache", 8195022, "JavaScript"),
+  ("Hutool", "https://github.com/chinabugotech/hutool/pull/4157", 199862910, "Java, v7 dev"),
+  ("sieve-cache", "https://github.com/linux-china/sieve-cache", "assets/images/avatars/linux-china.png", "Java"),
+  ("SieveCache", "https://github.com/patriksima/SieveCache", 172640, "C#"),
+  ("SIEVE", "https://github.com/lostmsu/SIEVE", 239520, "C#"),
+  ("sieve-cache-cpp", "https://github.com/kassane/sieve-cache-cpp", "assets/images/avatars/kassane.jpeg", "C++"),
+  ("sieve-cache-d", "https://github.com/kubo39/sieve-cache-d", "assets/images/avatars/kubo39.jpeg", "D"),
+  ("sieve.cache", "https://github.com/daipham3213/sieve.cache", 83876166, "Python"),
+  ("sieve-cache-in-rust", "https://github.com/ankitsheoran1/sieve-cache-in-rust", 33404702, "Rust"),
+  ("sieve_cache", "https://github.com/thelibrarian/sieve_cache", "assets/images/avatars/thelibrarian.jpeg", "Ruby"),
+  ("sieve-swift", "https://github.com/nixberg/sieve-swift", 310825, "Swift"),
+  ("sieve_cache", "https://github.com/lost22git/sieve_cache", 65008815, "Nim"),
+  ("sieve", "https://github.com/alanwang67/sieve", 33503035, "Elixir"),
+] -%}
+{%- set writeups = [
+  ("Marc Brooker’s blog", "https://brooker.co.za/blog/2023/12/15/sieve.html"),
+  ("ISC blog", "https://www.isc.org/blogs/2025-sieve/"),
+  ("APNIC blog", "https://blog.apnic.net/2025/08/05/sieve-a-better-algorithm-than-lru/"),
+  (";login:", "https://www.usenix.org/publications/loginonline/sieve-cache-eviction-can-be-simple-effective-and-scalable"),
+  ("Live Science", "https://www.livescience.com/technology/communications/remarkable-sieve-algorithm-speed-up-web-browsing-google-meta-interested"),
+  ("Slashdot", "https://developers.slashdot.org/story/24/06/30/2337238/caching-is-key-and-sieve-is-better-than-lru"),
+  ("TL;DR", "https://tldr.tech/tech/2024-01-04"),
+  ("Wikipedia", "https://en.wikipedia.org/wiki/Cache_replacement_policies"),
+  ("Latency (Manning)", "https://p99conf.io/2026/05/20/cache-replacement-strategies/"),
+  ("Tech Explorist", "https://www.techexplorist.com/revolutionizing-web-caching-simple-method-speed-cache-sifting/80899/"),
+  ("BBConf", "https://bbconf.kr/archive/", None, "Korean"),
+  ("Rate Labs blog", "https://medium.com/rate-labs/%EC%96%B4%EB%96%A4-%EC%86%8C%EA%B0%80-%EC%9D%BC%EC%9D%84-%EB%8D%94-%EC%9E%98%ED%95%A9%EB%8B%88%EA%B9%8C-fifo%EA%B0%80-lru%EB%B3%B4%EB%8B%A4-%EB%82%AB%EC%8A%B5%EB%8B%88%EB%8B%A4%EC%9A%94-1a49b9060ce4", None, "Korean"),
+  ("IEPG talk", "https://www.youtube.com/watch?v=HIrgi2JUQh8&t=5462s"),
+] -%}
+{#- Lines of code to replace LRU with SIEVE, from the paper -#}
+{%- set ports = [
+  ("groupcache", "https://github.com/cacheMon/groupcache", "Go", 21, "<1"),
+  ("mnemonist", "https://github.com/cacheMon/mnemonist", "JavaScript", 12, "1"),
+  ("lru-rs", "https://github.com/cacheMon/lru-rs", "Rust", 16, "1"),
+  ("lru-dict", "https://github.com/cacheMon/lru-dict", "Python + C", 21, "<1"),
+] -%}
 
-  .md-main__inner {
-    margin: 0
-  }
-
-  .md-content {
-    display: none
-  }
-
-  @media screen and (min-width:60em) {
-    .md-sidebar--secondary {
-      display: none
-    }
-  }
-
-  @media screen and (min-width:76.25em) {
-    .md-sidebar--primary {
-      display: none
-    }
-  }
-
-  code[class="language-python"] {
-    font-size: 0.75rem;
-  }
-
-  code[class="language-javascript"] {
-    font-size: 0.75rem;
-  }
-
-  /* Hero buttons are links now, so they keep their button look */
-  a.btn-yellow, a.btn-yellow:hover {
-    text-decoration: none;
-  }
-
-  .award {
-    display: inline-block;
-    margin: 0 0 1.25rem;
-    padding: .25rem .75rem;
-    border: 1px solid rgba(234, 132, 78, .6);
-    border-radius: 999px;
-    color: #f3b48e;
-    font-size: .7rem;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-  }
-
-  /* How it works, in words */
-  .steps {
-    max-width: 44rem;
-    margin: 1rem auto 3rem;
-    padding: 0 1.5rem;
-    color: #333;
-    font-size: .85rem;
-    line-height: 1.6;
-  }
-  .steps li { margin-bottom: .5rem; }
-
-  /* Adoption: one wrapped row of chips per group */
-  .adopt {
-    max-width: 64rem;
-    margin: 0 auto;
-    padding: 0 1.25rem 1rem;
-  }
-  .adopt-group { margin-top: 1.75rem; }
-  .adopt-group h3 {
-    margin: 0 0 .75rem;
-    color: #6b6460;
-    font-size: .7rem;
-    font-weight: 700;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-  }
-  .adopt-group h3 span {
-    font-weight: 400;
-    letter-spacing: 0;
-    text-transform: none;
-  }
-  .chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .5rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .chips li { margin: 0; }
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    gap: .45rem;
-    padding: .3rem .7rem .3rem .35rem;
-    border: 1px solid #e6dfd8;
-    border-radius: 999px;
-    background: #fff;
-    color: #222 !important;
-    font-size: .72rem;
-    line-height: 1.3;
-    text-decoration: none;
-    transition: border-color .15s, color .15s;
-  }
-  .chip:hover { border-color: #ec712f; color: #b8521b !important; }
-  .chip:focus-visible { outline: 2px solid #ec712f; outline-offset: 2px; }
-  .chip img {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    flex: none;
-    background: #f3efea;
-    object-fit: cover;
-  }
-  .chip .tag { color: #8a817a; font-size: .64rem; }
-  .chip--text { padding-left: .7rem; }
-  .adopt-note {
-    margin: 2rem 0 0;
-    color: #555;
-    font-size: .8rem;
-    text-align: center;
-  }
-  .adopt-note a { color: #c4561a; }
-
-  .more-links {
-    margin-top: 1rem;
-    color: #555;
-    font-size: .8rem;
-  }
-  .more-links a { color: #c4561a; }
-
-  /* Phones: headings and the diagram sized to the screen */
-  @media (max-width: 539px) {
-    .h1 { font-size: 2.1rem; }
-    .h1-2 { font-size: 2rem; }
-    .howdoeswork-img { width: 100%; }
-    .description { margin-left: 1.25rem; margin-right: 1.25rem; font-size: 1.1rem; }
-    .feature-image img { max-width: calc(100% - 2.5rem); margin-left: 1.25rem; margin-right: 1.25rem; }
-  }
-</style>
-
-<section class="section-dark-body w-100">
-  <div class="md-grid conteiner-row pt-1 pt-lg-5 my-4">
-    <div class="px-3 ctx-header-text conteiner">
-      <div class="conteiner-row">
-        <p class="h1 text-xs-center t-b">
-          <span style="color:#ec5b0d;">SIEVE</span>
-        </p>
-      </div>
-      <img src="assets/images/logos/sieve-logo.svg" alt=""
-        class="laverage-header-img d-lg-none d-xl-none d-md-none d-sm-none d-xs-none mx-auto" />
-      <p class="h2-3 text-xs-center spacing t-b mb-2" style="font-family:Sans-serif; color:#ea844e;" id="animated-text"></p>
-      <p class="text-xs-center"><span class="award">NSDI &rsquo;24 &middot; Community Award</span></p>
-      <div class="conteiner-row conteiner-xs">
-        <a href="#howwork"
-          class="btn-yellow btn-xl-large btn-lg-large mx-2 mt-2 my-md-4 my-lg-4 my-xl-4 box-shadow">
-          How it works
-        </a>
-        <a href="https://www.usenix.org/conference/nsdi24/presentation/zhang-yazhuo" target="_blank" rel="noopener"
-          class="btn-yellow btn-xl-large btn-lg-large mx-2 mt-2 my-md-4 my-lg-4 my-xl-4 box-shadow">
-          NSDI&rsquo;24 Paper
-        </a>
-        <a href="https://github.com/cacheMon/NSDI24-SIEVE" target="_blank" rel="noopener"
-          class="btn-yellow btn-xl-large btn-lg-large mx-2 mt-2 my-md-4 my-lg-4 my-xl-4 box-shadow">
-          Code
-        </a>
-        <a href="blog/2023/12/17/sieve-is-simpler-than-lru/"
-          class="btn-yellow btn-xl-large btn-lg-large mx-2 mt-2 my-md-4 my-lg-4 my-xl-4 box-shadow">
-          Blog post
-        </a>
-      </div>
-    </div>
-    <div class="mt-4 pl-3">
-      <img src="assets/images/logos/sieve-front-image.svg" alt="" style="width: 80%; height: auto;"/>
-    </div>
-  </div>
-</section>
-
-<section class="section-white-body w-100" id="howwork">
-  <div class="text-align-center t-b text-dark h1 mt-5">
-    <p>How does SIEVE work?</p>
-  </div>
-  <div class="center-container my-2">
-    <img src="assets/images/illustrations/sieve_diagram.gif" class="howdoeswork-img my-xs-5 my-sm-5 my-md-5"
-      alt="Animation of SIEVE: requests arrive, a hit sets an object's visited bit, and a hand moves from the tail toward the head to find an object to evict." />
-  </div>
-  <ol class="steps">
-    <li><b>On a hit,</b> SIEVE sets the object&rsquo;s visited bit. Nothing moves.</li>
-    <li><b>On a miss,</b> the new object is inserted at the head of a single FIFO queue.</li>
-    <li><b>To evict,</b> a hand walks from the tail toward the head. It clears the visited bit of each object it
-      passes and evicts the first object whose bit was already clear, then stays there for the next eviction.</li>
-  </ol>
-</section>
-
-<section class="section-yellow-body w-100" id="keyfeatures">
-  <div class="text-align-center t-b text-white h1 my-5">
-    <p>Key Features</p>
-  </div>
-  <div class="main-container">
-    <div class="feature-container">
-      <div class="feature-text">
-          <h2>Simplicity</h2>
-          <p class="description">SIEVE is easy to implement and can be easily integrated into existing systems. </p>
-      </div>
-      <div class="feature-image">
-          <table style="margin:auto; border-collapse:collapse; width:82%; box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.5);">
-            <tr style="font-size: 0.9rem; background-color:white; color:black;">
-              <th style="border:1px solid black; padding:10px; font-weight: bold;">Cache library</th>
-              <th style="border:1px solid black; padding:10px; font-weight: bold;">Language</th>
-              <th style="border:1px solid black; padding:10px; font-weight: bold;">Lines</th>
-              <th style="border:1px solid black; padding:10px; font-weight: bold;">Hours of work</th>
-            </tr>
-            <tr style="font-size: 0.8rem; background-color:white; color:black; text-align:center;">
-              <td style="border:1px solid black; padding:10px;">
-                <a href="https://github.com/cacheMon/groupcache" style="color:#d6723c; text-decoration:none;">groupcache</a>
-              </td>
-              <td style="border:1px solid black; padding:10px;">Go</td>
-              <td style="border:1px solid black; padding:10px;">21</td>
-              <td style="border:1px solid black; padding:10px;">&lt;1</td>
-            </tr>
-            <tr style="font-size: 0.8rem; background-color:white; color:black; text-align:center;">
-              <td style="border:1px solid black; padding:10px;">
-                <a href="https://github.com/cacheMon/mnemonist" style="color: #d6723c; text-decoration:none;">mnemonist</a>
-              </td>
-              <td style="border:1px solid black; padding:10px;">JavaScript</td>
-              <td style="border:1px solid black; padding:10px;">12</td>
-              <td style="border:1px solid black; padding:10px;">1</td>
-            </tr>
-            <tr style="font-size: 0.8rem; background-color:white; color:black; text-align:center;">
-              <td style="border:1px solid black; padding:10px;">
-                <a href="https://github.com/cacheMon/lru-rs" style="color: #d6723c; text-decoration:none;">lru-rs</a>
-              </td>
-              <td style="border:1px solid black; padding:10px;">Rust</td>
-              <td style="border:1px solid black; padding:10px;">16</td>
-              <td style="border:1px solid black; padding:10px;">1</td>
-            </tr>
-            <tr style="font-size: 0.8rem; background-color:white; color:black; text-align:center;">
-              <td style="border:1px solid black; padding:10px;">
-                <a href="https://github.com/cacheMon/lru-dict" style="color: #d6723c; text-decoration:none;">lru-dict</a>
-              </td>
-              <td style="border:1px solid black; padding:10px;">Python + C</td>
-              <td style="border:1px solid black; padding:10px;">21</td>
-              <td style="border:1px solid black; padding:10px;">&lt;1</td>
-            </tr>
-          </table>
-      </div>
-
-    </div>
-    <div class="feature-container">
-      <div class="feature-text">
-        <h2>Efficiency</h2>
-        <p class="description">SIEVE achieves state-of-the-art efficiency on skewed workloads.</p>
-        <p class="description" style="font-size: 0.8rem;"><br>*Miss ratio on a Zipfian dataset (&alpha;=1). </p>
-      </div>
-      <div class="feature-image">
-        <img src="assets/images/illustrations/zipf.svg" alt="Miss ratio of SIEVE and other algorithms on a Zipfian workload">
-      </div>
-    </div>
-    <div class="feature-container">
-      <div class="feature-text">
-          <h2>Cache Primitive</h2>
-          <p class="description">
-            SIEVE can facilitate the design of advanced eviction algorithms.
-          </p>
-      </div>
-      <div class="feature-image">
-          <img src="assets/images/illustrations/sieve_queue_all_large.svg" alt="Miss ratio reduction when SIEVE replaces LRU or FIFO inside other algorithms">
-      </div>
-    </div>
-  </div>
-</section>
-
-{#- One chip per adopter. Each links to the code, merged PR or docs that show
-    SIEVE in use, the same evidence the cacheMon homepage cites. -#}
-{%- macro chip(name, href, img=None, tag=None) -%}
-<li><a class="chip{% if not img %} chip--text{% endif %}" href="{{ href }}" target="_blank" rel="noopener">
-  {%- if img %}<img src="{{ img }}" alt="" loading="lazy">{% endif -%}
-  {{ name }}{% if tag %} <span class="tag">{{ tag }}</span>{% endif %}</a></li>
+{%- macro logo(img, size=22) -%}
+  {%- if img is number -%}
+  <img src="https://avatars.githubusercontent.com/u/{{ img }}?s=64&amp;v=4" alt="" loading="lazy" width="{{ size }}" height="{{ size }}">
+  {%- elif img -%}
+  <img src="{{ img }}" alt="" loading="lazy" width="{{ size }}" height="{{ size }}">
+  {%- endif -%}
 {%- endmacro %}
 
-<section class="section-white-body w-100" id="adoption">
-  <div class="text-align-center t-b text-dark h1-2 mt-4">
-    <p>Adoption</p>
-  </div>
+{%- macro chips(rows) -%}
+<ul class="sv-chips">
+  {%- for row in rows %}
+  <li><a class="sv-chip{% if not row[2] %} sv-chip--text{% endif %}" href="{{ row[1] }}" target="_blank" rel="noopener">
+    {{- logo(row[2]) }}{{ row[0] }}{% if row[3] %} <span class="sv-chip-tag">{{ row[3] }}</span>{% endif %}</a></li>
+  {%- endfor %}
+</ul>
+{%- endmacro %}
 
-  <div class="adopt">
-    <div class="adopt-group">
-      <h3>Systems running SIEVE</h3>
-      <ul class="chips">
-        {{ chip("ClickHouse", "https://github.com/ClickHouse/ClickHouse/pull/123435", "https://avatars.githubusercontent.com/u/54801242?s=64&amp;v=4") }}
-        {{ chip("TiDB", "https://github.com/pingcap/tidb/blob/master/pkg/infoschema/sieve.go", "https://avatars.githubusercontent.com/u/11855343?s=64&amp;v=4") }}
-        {{ chip("Ceph", "https://github.com/ceph/ceph/blob/main/src/common/web_cache.h", "assets/images/avatars/Ceph_logo.png") }}
-        {{ chip("BIND 9", "https://www.isc.org/blogs/2025-sieve/", "https://avatars.githubusercontent.com/u/3965132?s=64&amp;v=4") }}
-        {{ chip("Apache Druid", "https://github.com/apache/druid/pull/18176", "https://avatars.githubusercontent.com/u/47359?s=64&amp;v=4") }}
-        {{ chip("Apache Ignite", "https://github.com/apache/ignite-3/pull/7599", "https://avatars.githubusercontent.com/u/47359?s=64&amp;v=4") }}
-        {{ chip("Jetpack Compose", "https://github.com/androidx/androidx/blob/androidx-main/compose/ui/ui-text/src/androidMain/kotlin/androidx/compose/ui/text/platform/AndroidFontListTypeface.android.kt", "https://avatars.githubusercontent.com/u/6955922?s=64&amp;v=4") }}
-        {{ chip("DragonflyDB", "https://github.com/dragonflydb/dragonfly/blob/main/src/core/compact_object.h#L124", "https://avatars.githubusercontent.com/u/104819355?s=64&amp;v=4") }}
-        {{ chip("Turso", "https://github.com/tursodatabase/turso/blob/main/core/storage/page_cache.rs", "https://avatars.githubusercontent.com/u/139391156?s=64&amp;v=4") }}
-        {{ chip("Deep Graph Library", "https://github.com/dmlc/dgl/blob/master/python/dgl/graphbolt/impl/cpu_feature_cache.py", "https://avatars.githubusercontent.com/u/11508361?s=64&amp;v=4") }}
-        {{ chip("Mooncake", "https://github.com/kvcache-ai/Mooncake/blob/main/docs/source/design/transfer-engine/index.md", "https://avatars.githubusercontent.com/u/170996193?s=64&amp;v=4") }}
-        {{ chip("TanStack Router", "https://github.com/TanStack/router/blob/main/packages/router-core/src/sieve-cache.ts", "https://avatars.githubusercontent.com/u/72518640?s=64&amp;v=4") }}
-        {{ chip("h3", "https://github.com/h3js/h3/pull/1543", "https://avatars.githubusercontent.com/u/208435796?s=64&amp;v=4") }}
-        {{ chip("PostgREST", "https://docs.postgrest.org/en/latest/references/auth.html#jwt-cache", "assets/images/avatars/PostgREST_logo.png") }}
-        {{ chip("Yandex Odyssey", "https://github.com/yandex/odyssey/blob/master/docs/configuration/rules.md", "https://avatars.githubusercontent.com/u/7409213?s=64&amp;v=4") }}
-        {{ chip("KurrentDB", "https://github.com/kurrent-io/KurrentDB/blob/master/src/KurrentDB.Security.EncryptionAtRest/Transforms/DataStructures/SieveBlockCache.cs", "https://avatars.githubusercontent.com/u/1628864?s=64&amp;v=4") }}
-        {{ chip("Apache Jackrabbit Oak", "https://github.com/apache/jackrabbit-oak/blob/trunk/oak-run-commons/src/main/java/org/apache/jackrabbit/oak/index/indexer/document/tree/store/utils/SieveCache.java", "https://avatars.githubusercontent.com/u/47359?s=64&amp;v=4") }}
-        {{ chip("immudb", "https://github.com/codenotary/immudb/pull/1971", "https://avatars.githubusercontent.com/u/56740985?s=64&amp;v=4") }}
-        {{ chip("Redpanda Operator", "https://github.com/redpanda-data/redpanda-operator/blob/main/operator/pkg/admin/admin.go", "https://avatars.githubusercontent.com/u/49406389?s=64&amp;v=4") }}
-        {{ chip("Perkeep", "https://github.com/perkeep/perkeep/blob/master/pkg/blobserver/diskpacked/fdcache.go", "https://avatars.githubusercontent.com/u/34562864?s=64&amp;v=4") }}
-        {{ chip("dnscrypt-proxy", "https://github.com/DNSCrypt/dnscrypt-proxy/blob/master/dnscrypt-proxy/plugin_cache.go", "https://avatars.githubusercontent.com/u/34526273?s=64&amp;v=4") }}
-        {{ chip("encrypted-dns-server", "https://github.com/DNSCrypt/encrypted-dns-server/blob/master/src/cache.rs", "https://avatars.githubusercontent.com/u/34526273?s=64&amp;v=4") }}
-        {{ chip("Durable Streams", "https://github.com/durable-streams/durable-streams/blob/main/packages/server/src/file-store.ts", "https://avatars.githubusercontent.com/u/247893940?s=64&amp;v=4") }}
-        {{ chip("Pelikan", "https://github.com/pelikan-io/pelikan", "assets/images/avatars/pelikan.jpeg") }}
-        {{ chip("skiftOS", "https://github.com/skift-org/karm/blob/main/src/karm-core/base/sieve.cpp", "https://avatars.githubusercontent.com/u/46500022?s=64&amp;v=4") }}
-        {{ chip("Nyrkiö", "https://github.com/nyrkio/nyrkio/blob/main/backend/core/sieve.py", "https://avatars.githubusercontent.com/u/148359131?s=64&amp;v=4") }}
-      </ul>
+{%- macro icon(name) -%}
+  <span class="sv-icon" aria-hidden="true">{% include ".icons/" ~ name ~ ".svg" %}</span>
+{%- endmacro %}
+
+{% block tabs %}
+{{ super() }}
+<div class="sv">
+
+  <!-- Hero -->
+  <section class="sv-hero">
+    <div class="sv-hero-bg" aria-hidden="true"></div>
+    <div class="sv-wrap sv-hero-inner">
+      <a class="sv-pill" href="https://www.usenix.org/conference/nsdi24/presentation/zhang-yazhuo" target="_blank" rel="noopener">
+        <span class="sv-pill-tag">NSDI ’24</span>
+        <span>Community Award</span>
+        {{ icon("material/arrow-right") }}
+      </a>
+      <h1 class="sv-title">SIEVE</h1>
+      <p class="sv-tagline">An eviction algorithm <b>simpler than LRU</b>, for web caches</p>
+      <p class="sv-lede">
+        One queue, one pointer and one bit per object. A hit only sets a bit, so it takes no lock, and replacing
+        LRU with SIEVE in a cache library takes about 20 lines of code.
+      </p>
+      <div class="sv-actions">
+        <a class="sv-btn sv-btn--primary" href="#how">See it run {{ icon("material/arrow-right") }}</a>
+        <a class="sv-btn" href="https://www.usenix.org/conference/nsdi24/presentation/zhang-yazhuo" target="_blank" rel="noopener">
+          {{ icon("material/file-document-outline") }}Paper</a>
+        <a class="sv-btn" href="https://github.com/cacheMon/NSDI24-SIEVE" target="_blank" rel="noopener">
+          {{ icon("fontawesome/brands/github") }}Code</a>
+        <a class="sv-btn" href="blog/2023/12/17/sieve-is-simpler-than-lru/">
+          {{ icon("material/book-open-variant") }}Blog post</a>
+      </div>
     </div>
 
-    <div class="adopt-group">
-      <h3>In progress upstream <span>&mdash; open pull requests</span></h3>
-      <ul class="chips">
-        {{ chip("PowerDNS dnsdist", "https://github.com/PowerDNS/pdns/pull/16692", "https://avatars.githubusercontent.com/u/1282630?s=64&amp;v=4") }}
-        {{ chip("Salsa (rust-analyzer)", "https://github.com/salsa-rs/salsa/pull/1226", "https://avatars.githubusercontent.com/u/43751271?s=64&amp;v=4") }}
-        {{ chip("CacheLib", "https://github.com/facebook/CacheLib/pull/336", "https://avatars.githubusercontent.com/u/69631?s=64&amp;v=4") }}
-      </ul>
+    <div class="sv-wrap">
+      <dl class="sv-stats">
+        <div><dt>1 bit</dt><dd>per object, plus one queue and one pointer</dd></div>
+        <div><dt>≤ 21</dt><dd>lines changed to replace LRU in four cache libraries</dd></div>
+        <div><dt>2×</dt><dd>the throughput of optimized LRU at 16 threads</dd></div>
+        <div><dt>45%</dt><dd>of 1,559 traces where it beats every state-of-the-art algorithm</dd></div>
+      </dl>
     </div>
 
-    <div class="adopt-group">
-      <h3>Cache libraries</h3>
-      <ul class="chips">
-        {{ chip("Android Jetpack", "https://developer.android.com/reference/kotlin/androidx/collection/SieveCache", "https://avatars.githubusercontent.com/u/6955922?s=64&amp;v=4", "Kotlin") }}
-        {{ chip("DotNext", "https://github.com/dotnet/dotNext/blob/master/src/DotNext.Threading/Runtime/Caching/RandomAccessCache.Eviction.cs", "https://avatars.githubusercontent.com/u/9141961?s=64&amp;v=4", "C#") }}
-        {{ chip("sieve-cache", "https://crates.io/crates/sieve-cache", "assets/images/avatars/jedisct1.jpeg", "Rust") }}
-        {{ chip("golang-fifo", "https://github.com/scalalang2/golang-fifo", "assets/images/avatars/scalalang2.jpeg", "Go") }}
-        {{ chip("go-sieve", "https://pkg.go.dev/github.com/opencoff/go-sieve", "assets/images/avatars/opencoff.jpeg", "Go") }}
-        {{ chip("samber/hot", "https://github.com/samber/hot", "https://avatars.githubusercontent.com/u/2951285?s=64&amp;v=4", "Go") }}
-        {{ chip("@neophi/sieve-cache", "https://github.com/NeoPhi/sieve-cache", "https://avatars.githubusercontent.com/u/721316?v=4", "TypeScript") }}
-        {{ chip("js-sieve", "https://github.com/kurtextrem/js-sieve", "assets/images/avatars/kurtextrem.jpeg", "JavaScript") }}
-        {{ chip("sieve", "https://github.com/zweifisch/sieve", "https://avatars.githubusercontent.com/u/447862?s=64&amp;v=4", "TypeScript") }}
-        {{ chip("sieve-cache", "https://github.com/tiberiualex/sieve-cache", "https://avatars.githubusercontent.com/u/8195022?v=4", "JavaScript") }}
-        {{ chip("Hutool", "https://github.com/chinabugotech/hutool/pull/4157", "https://avatars.githubusercontent.com/u/199862910?s=64&amp;v=4", "Java, v7 dev") }}
-        {{ chip("sieve-cache", "https://github.com/linux-china/sieve-cache", "assets/images/avatars/linux-china.png", "Java") }}
-        {{ chip("SieveCache", "https://github.com/patriksima/SieveCache", "https://avatars.githubusercontent.com/u/172640?v=4&size=64", "C#") }}
-        {{ chip("SIEVE", "https://github.com/lostmsu/SIEVE", "https://avatars.githubusercontent.com/u/239520?v=4", "C#") }}
-        {{ chip("sieve-cache-cpp", "https://github.com/kassane/sieve-cache-cpp", "assets/images/avatars/kassane.jpeg", "C++") }}
-        {{ chip("sieve-cache-d", "https://github.com/kubo39/sieve-cache-d", "assets/images/avatars/kubo39.jpeg", "D") }}
-        {{ chip("sieve.cache", "https://github.com/daipham3213/sieve.cache", "https://avatars.githubusercontent.com/u/83876166?v=4", "Python") }}
-        {{ chip("sieve-cache-in-rust", "https://github.com/ankitsheoran1/sieve-cache-in-rust", "https://avatars.githubusercontent.com/u/33404702?v=4", "Rust") }}
-        {{ chip("sieve_cache", "https://github.com/thelibrarian/sieve_cache", "assets/images/avatars/thelibrarian.jpeg", "Ruby") }}
-        {{ chip("sieve-swift", "https://github.com/nixberg/sieve-swift", "https://avatars.githubusercontent.com/u/310825?s=64&amp;v=4", "Swift") }}
-        {{ chip("sieve_cache", "https://github.com/lost22git/sieve_cache", "https://avatars.githubusercontent.com/u/65008815?v=4", "Nim") }}
-        {{ chip("sieve", "https://github.com/alanwang67/sieve", "https://avatars.githubusercontent.com/u/33503035?v=4", "Elixir") }}
-      </ul>
+    <div class="sv-wrap">
+      <div class="sv-proof">
+        <p>SIEVE runs in</p>
+        <ul>
+          <li>ClickHouse</li><li>TiDB</li><li>Ceph</li><li>BIND 9</li><li>Apache Druid</li>
+          <li>DragonflyDB</li><li>Turso</li><li>Jetpack Compose</li><li>Apache Ignite</li>
+        </ul>
+        <a href="#adoption">See every adopter {{ icon("material/arrow-right") }}</a>
+      </div>
     </div>
+  </section>
 
-    <div class="adopt-group">
-      <h3>Written about in</h3>
-      <ul class="chips">
-        {{ chip("Marc Brooker’s blog", "https://brooker.co.za/blog/2023/12/15/sieve.html") }}
-        {{ chip("ISC blog", "https://www.isc.org/blogs/2025-sieve/") }}
-        {{ chip("APNIC blog", "https://blog.apnic.net/2025/08/05/sieve-a-better-algorithm-than-lru/") }}
-        {{ chip(";login:", "https://www.usenix.org/publications/loginonline/sieve-cache-eviction-can-be-simple-effective-and-scalable") }}
-        {{ chip("Live Science", "https://www.livescience.com/technology/communications/remarkable-sieve-algorithm-speed-up-web-browsing-google-meta-interested") }}
-        {{ chip("Slashdot", "https://developers.slashdot.org/story/24/06/30/2337238/caching-is-key-and-sieve-is-better-than-lru") }}
-        {{ chip("TL;DR", "https://tldr.tech/tech/2024-01-04") }}
-        {{ chip("Wikipedia", "https://en.wikipedia.org/wiki/Cache_replacement_policies") }}
-        {{ chip("Latency (Manning)", "https://p99conf.io/2026/05/20/cache-replacement-strategies/") }}
-        {{ chip("Tech Explorist", "https://www.techexplorist.com/revolutionizing-web-caching-simple-method-speed-cache-sifting/80899/") }}
-        {{ chip("BBConf", "https://bbconf.kr/archive/", None, "Korean") }}
-        {{ chip("Rate Labs blog", "https://medium.com/rate-labs/%EC%96%B4%EB%96%A4-%EC%86%8C%EA%B0%80-%EC%9D%BC%EC%9D%84-%EB%8D%94-%EC%9E%98%ED%95%A9%EB%8B%88%EA%B9%8C-fifo%EA%B0%80-lru%EB%B3%B4%EB%8B%A4-%EB%82%AB%EC%8A%B5%EB%8B%88%EB%8B%A4%EC%9A%94-1a49b9060ce4", None, "Korean") }}
-        {{ chip("IEPG talk", "https://www.youtube.com/watch?v=HIrgi2JUQh8&t=5462s") }}
-      </ul>
+  <!-- How it works -->
+  <section class="sv-section" id="how">
+    <div class="sv-wrap">
+      <header class="sv-head">
+        <p class="sv-eyebrow">How it works</p>
+        <h2>A hand that sifts one queue</h2>
+        <p>
+          New objects join the head of a single queue. When the cache is full, a hand walks from the tail toward the
+          head: objects that were used since it last passed keep their place, and the first one that was not is
+          evicted.
+        </p>
+      </header>
+
+      <figure class="sim" id="sim">
+        <div class="sim-bar">
+          <div class="sim-stream">
+            <span class="sim-label">Next requests</span>
+            <ol class="sim-next" aria-label="Upcoming requests"></ol>
+          </div>
+          <dl class="sim-stats">
+            <div><dt>Hits</dt><dd data-stat="hits">0</dd></div>
+            <div><dt>Misses</dt><dd data-stat="misses">0</dd></div>
+            <div><dt>Miss ratio</dt><dd data-stat="ratio">&ndash;</dd></div>
+          </dl>
+        </div>
+
+        <div class="sim-stage" role="img"
+          aria-label="Animation of a SIEVE cache: one queue of objects, each with a visited bit, and a hand that moves from the tail toward the head to pick an object to evict. The text below describes every step.">
+          <div class="sim-ends" aria-hidden="true"><span>Head, newest</span><span>Tail, oldest</span></div>
+          <div class="sim-slots"></div>
+          <div class="sim-tokens" aria-hidden="true"></div>
+          <div class="sim-hand" aria-hidden="true"><i></i><span>hand</span></div>
+        </div>
+
+        <div class="sim-foot">
+          <ol class="sim-log"></ol>
+          <div class="sim-controls">
+            <button type="button" class="sv-btn sv-btn--sm" data-act="play" aria-pressed="true">
+              <span class="sim-ico-pause">{{ icon("material/pause") }}</span><span class="sim-ico-play">{{ icon("material/play") }}</span><span class="sim-play-label">Pause</span>
+            </button>
+            <button type="button" class="sv-btn sv-btn--sm" data-act="step">{{ icon("material/skip-next") }}<span>Step</span></button>
+            <button type="button" class="sv-btn sv-btn--sm" data-act="reset">{{ icon("material/restart") }}<span>Restart</span></button>
+          </div>
+        </div>
+        <figcaption>
+          <span class="sim-key-swatch is-visited"></span> visited since the hand last passed
+          <span class="sim-key-swatch"></span> not visited. The demo uses a cache of six objects so that every move
+          is easy to follow.
+        </figcaption>
+      </figure>
+
+      <ol class="sv-rules">
+        <li>
+          <span class="sv-rule-tag">1 queue</span>
+          <h3>New objects go in at the head</h3>
+          <p>Objects stay in the order they arrived. Nothing is ever moved back to the head, so the queue never
+            needs reordering.</p>
+        </li>
+        <li>
+          <span class="sv-rule-tag is-visited">1 bit</span>
+          <h3>A hit sets one bit</h3>
+          <p>A hit marks the object as visited. If the bit is already set there is nothing to do at all: no lock and
+            no pointer updates on the hot path.</p>
+        </li>
+        <li>
+          <span class="sv-rule-tag is-hand">hand</span>
+          <h3>The hand sifts</h3>
+          <p>To make room, the hand walks from the tail toward the head, clearing the bits of visited objects, and
+            evicts the first one that was not visited. Past the head, it wraps back to the tail.</p>
+        </li>
+        <li>
+          <span class="sv-rule-tag">vs CLOCK</span>
+          <h3>Survivors stay put</h3>
+          <p>CLOCK moves a surviving object back to the head with the new ones. SIEVE leaves it where it is, so
+            popular objects settle near the tail and new ones that are not reused leave quickly.</p>
+        </li>
+      </ol>
     </div>
+  </section>
 
-    <p class="adopt-note">
-      Shipped SIEVE somewhere? <a href="mailto:cachemon.org@gmail.com">Tell us</a> &mdash; we would love to list you,
-      and to hear how it went.
-    </p>
-  </div>
-</section>
+  <!-- Results -->
+  <section class="sv-section sv-section--alt" id="results">
+    <div class="sv-wrap">
+      <header class="sv-head">
+        <p class="sv-eyebrow">Results</p>
+        <h2>Simple to adopt, efficient and fast</h2>
+        <p>
+          On 1,559 traces with 247 billion requests, SIEVE beats every state-of-the-art eviction algorithm on more
+          than 45% of them, and it does so with less code and more throughput than LRU.
+        </p>
+      </header>
 
-<section class="section-white-body w-100" id="sponsors">
-  <div class="text-align-center t-b text-dark h1-2 mt-4">
-    <p>Acknowledgement</p>
-  </div>
+      <div class="sv-charts">
+        <article class="sv-card sv-card--wide">
+          <header>
+            <p class="sv-kicker">13–18% fewer misses than LRU</p>
+            <h3>Miss ratio on a Zipf workload</h3>
+            <p>α = 1, one panel per cache size as a share of the working set. Lower is better.</p>
+          </header>
+          <div class="sv-multiples">
+            <div class="sv-chart sv-chart--panel"><canvas id="chart-zipf-0" role="img" aria-label="Miss ratio at a cache of 0.1% of the working set. The table below lists the values."></canvas></div>
+            <div class="sv-chart sv-chart--panel"><canvas id="chart-zipf-1" role="img" aria-label="Miss ratio at a cache of 1% of the working set. The table below lists the values."></canvas></div>
+            <div class="sv-chart sv-chart--panel"><canvas id="chart-zipf-2" role="img" aria-label="Miss ratio at a cache of 10% of the working set. The table below lists the values."></canvas></div>
+            <div class="sv-chart sv-chart--panel"><canvas id="chart-zipf-3" role="img" aria-label="Miss ratio at a cache of 20% of the working set. The table below lists the values."></canvas></div>
+          </div>
+          <details class="sv-data"><summary>Data table</summary><div data-table="zipf"></div></details>
+        </article>
 
-  <div class="text-align-center t-500 text-dark h3 my-3">
-    <p><span class="t-b italic h2-2">Sponsors:</span><br>
-      <a href="https://csd.cmu.edu/" target="_blank" class="custom-link-text">Carnegie Mellon University</a> <a href="https://www.pdl.cmu.edu/index.shtml" target="_blank" class="custom-link-text">Parallel Data Laboratory</a>
-      <a href="https://www.cs.emory.edu/home/" target="_blank" class="custom-link-text">Emory University</a> SimBioSys Lab<br>
-      Meta, Google, AWS, Microsoft, CloudLab, NSF, Sloan Foundation and VMware</p><br>
-    <p><span class="t-b italic h2-2">Dataset source:</span><br>
-      Meta, Tencent, Wikimedia, Twitter</p>
-  </div>
+        <article class="sv-card">
+          <header>
+            <p class="sv-kicker">A better building block</p>
+            <h3>SIEVE inside other algorithms</h3>
+            <p>Mean miss ratio reduction from FIFO across traces, before and after SIEVE replaces each algorithm’s LRU
+              or FIFO queue. Higher is better.</p>
+          </header>
+          <div class="sv-chart"><canvas id="chart-primitive" role="img" aria-label="Mean miss ratio reduction from FIFO for LeCaR, TwoQ, ARC and S3-FIFO, originally and with SIEVE inside. The table below lists the values."></canvas></div>
+          <details class="sv-data"><summary>Data table</summary><div data-table="chart-primitive"></div></details>
+        </article>
 
-</section>
+        <article class="sv-card">
+          <header>
+            <p class="sv-kicker">About an hour of work</p>
+            <h3>Lines changed to replace LRU</h3>
+            <p>In four popular cache libraries, tests not included.</p>
+          </header>
+          <table class="sv-table">
+            <thead><tr><th>Library</th><th>Language</th><th>Lines</th><th>Hours</th></tr></thead>
+            <tbody>
+              {%- for row in ports %}
+              <tr>
+                <th scope="row"><a href="{{ row[1] }}" target="_blank" rel="noopener">{{ row[0] }}</a></th>
+                <td>{{ row[2] }}</td>
+                <td><span class="sv-bar" style="--v: {{ row[3] / 21 }}"></span>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+              </tr>
+              {%- endfor %}
+            </tbody>
+          </table>
+          <div class="sv-speed">
+            <div><strong>16%</strong><span>faster than optimized LRU on one thread</span></div>
+            <div><strong>2×</strong><span>its throughput at 16 threads, in Cachelib</span></div>
+          </div>
+        </article>
+      </div>
+      <p class="sv-source">Charts redrawn from the figures in the paper and the blog post.</p>
+    </div>
+  </section>
 
+  <!-- Use it -->
+  <section class="sv-section" id="usage">
+    <div class="sv-wrap">
+      <header class="sv-head">
+        <p class="sv-eyebrow">Use it</p>
+        <h2>The whole algorithm fits on a card</h2>
+        <p>Pick a library in your language, or replay your own traces against SIEVE in libCacheSim.</p>
+      </header>
 
-<section class="section-white-body w-100" id="contactus">
-  <div class="text-align-center t-b text-dark h1-2 mt-4">
-    <p>Contact Us</p>
-  </div>
+      <div class="sv-use">
+        <div class="sv-code">
+          <div class="sv-code-bar">
+            <span class="sv-code-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="sv-code-name">SIEVE, in pseudocode</span>
+            <button type="button" class="sv-copy" data-copy="#sv-algo">{{ icon("material/content-copy") }}<span>Copy</span></button>
+          </div>
+<pre id="sv-algo"><code><span class="t-c"># request x, queue T, size C, hand p</span>
+<span class="t-k">if</span> x <span class="t-k">in</span> T:                       <span class="t-c"># hit</span>
+    x.visited = <span class="t-n">true</span>
+<span class="t-k">else</span>:                             <span class="t-c"># miss</span>
+    <span class="t-k">if</span> |T| == C:                   <span class="t-c"># cache full</span>
+        obj = p <span class="t-k">or</span> tail(T)
+        <span class="t-k">while</span> obj.visited:
+            obj.visited = <span class="t-n">false</span>
+            obj = obj.prev <span class="t-k">or</span> tail(T)
+        p = obj.prev
+        discard obj                    <span class="t-c"># eviction</span>
+    insert x at head(T)
+    x.visited = <span class="t-n">false</span>               <span class="t-c"># insertion</span></code></pre>
+        </div>
 
-  <div class="text-align-center t-500 text-dark h3 mt-3 mb-5">
-    <a href="mailto:cachemon.org@gmail.com" target="_blank" class="custom-link" aria-label="Email">
-      <i class="fa-solid fa-envelope fa-2x"></i></a>
-    <a href="https://join.slack.com/t/cachemon/shared_invite/zt-20pjil08z-f9d1Ui~p1gfBnsedHP9x8Q" target="_blank" class="custom-link" aria-label="Slack">
-      <i class="fa-brands fa-slack fa-2x"></i></a>
-    <a href="https://twitter.com/cachemon_org" target="_blank" class="custom-link" aria-label="X (Twitter)">
-      <i class="fa-brands fa-twitter fa-2x"></i></a>
-    <a href="https://github.com/cacheMon" target="_blank" class="custom-link" aria-label="GitHub">
-      <i class="fa-brands fa-github fa-2x"></i></a>
-    <p class="more-links">
-      More from cacheMon: <a href="https://s3fifo.com">S3-FIFO</a> &middot;
-      <a href="https://libcachesim.com">libCacheSim</a> &middot;
-      <a href="https://cachemon.org">cachemon.org</a>
-    </p>
-  </div>
+        <div class="sv-libs">
+          <h3>Production libraries</h3>
+          <ul class="sv-liblist">
+            {%- for row in libraries %}
+            <li><a href="{{ row[1] }}" target="_blank" rel="noopener">{{ logo(row[2], 26) }}<span class="sv-lib-name">{{ row[0] }}</span><span class="sv-lib-lang">{{ row[3] }}</span>{{ icon("octicons/arrow-up-right-16") }}</a></li>
+            {%- endfor %}
+          </ul>
+          <a class="sv-callout" href="https://libcachesim.com" target="_blank" rel="noopener">
+            <img src="https://avatars.githubusercontent.com/u/63929539?s=64&amp;v=4" alt="" loading="lazy" width="36" height="36">
+            <span><b>libCacheSim</b> Compare SIEVE with other eviction algorithms on your own traces.</span>
+            {{ icon("material/arrow-right") }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-</section>
+  <!-- Adoption -->
+  <section class="sv-section sv-section--alt" id="adoption">
+    <div class="sv-wrap">
+      <header class="sv-head">
+        <p class="sv-eyebrow">Adoption</p>
+        <h2>Running in real systems</h2>
+        <p>
+          Databases, DNS servers, storage engines and web frameworks run SIEVE. Each entry links to the code, pull
+          request or docs that show it.
+        </p>
+      </header>
 
+      <h3 class="sv-group">Systems running SIEVE <span class="sv-count">{{ systems | length }}</span></h3>
+      <ul class="sv-tiles">
+        {%- for row in systems %}
+        <li><a class="sv-tile" href="{{ row[1] }}" target="_blank" rel="noopener">{{ logo(row[2], 28) }}<span>{{ row[0] }}</span>{{ icon("octicons/arrow-up-right-16") }}</a></li>
+        {%- endfor %}
+      </ul>
+
+      <h3 class="sv-group">In progress upstream <span class="sv-count">{{ in_progress | length }}</span></h3>
+      <p class="sv-group-note">Open pull requests.</p>
+      {{ chips(in_progress) }}
+
+      <h3 class="sv-group">More implementations <span class="sv-count">{{ implementations | length }}</span></h3>
+      {{ chips(implementations) }}
+
+      <h3 class="sv-group">Written about in <span class="sv-count">{{ writeups | length }}</span></h3>
+      {{ chips(writeups) }}
+    </div>
+  </section>
+
+  <!-- Acknowledgements and contact -->
+  <section class="sv-section sv-section--end" id="contact">
+    <div class="sv-wrap">
+      <div class="sv-thanks">
+        <div>
+          <h3>Supported by</h3>
+          <p>
+            <a href="https://csd.cmu.edu/" target="_blank" rel="noopener">Carnegie Mellon University</a>,
+            <a href="https://www.pdl.cmu.edu/index.shtml" target="_blank" rel="noopener">Parallel Data Laboratory</a>,
+            <a href="https://www.cs.emory.edu/home/" target="_blank" rel="noopener">Emory University</a>, SimBioSys Lab,
+            Meta, Google, AWS, Microsoft, CloudLab, NSF, the Sloan Foundation and VMware.
+          </p>
+        </div>
+        <div>
+          <h3>Traces from</h3>
+          <p>Meta, Tencent, Wikimedia and Twitter.</p>
+        </div>
+      </div>
+
+      <div class="sv-contact">
+        <h2>Shipped SIEVE, or have a question?</h2>
+        <p>We would love to list you, and to hear how it went.</p>
+        <div class="sv-actions">
+          <a class="sv-btn sv-btn--primary" href="mailto:cachemon.org@gmail.com">{{ icon("fontawesome/solid/envelope") }}Email us</a>
+          <a class="sv-btn" href="https://join.slack.com/t/cachemon/shared_invite/zt-20pjil08z-f9d1Ui~p1gfBnsedHP9x8Q" target="_blank" rel="noopener">{{ icon("fontawesome/brands/slack") }}Slack</a>
+          <a class="sv-btn" href="https://twitter.com/cachemon_org" target="_blank" rel="noopener">{{ icon("fontawesome/brands/twitter") }}X / Twitter</a>
+          <a class="sv-btn" href="https://github.com/cacheMon" target="_blank" rel="noopener">{{ icon("fontawesome/brands/github") }}GitHub</a>
+        </div>
+        <p class="sv-more">
+          More from cacheMon: <a href="https://s3fifo.com">S3-FIFO</a> &middot;
+          <a href="https://libcachesim.com">libCacheSim</a> &middot; <a href="https://cachemon.org">cachemon.org</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"
+  integrity="sha512-VMsZqo0ar06BMtg0tPsdgRADvl0kDHpTbugCBBrL55KmucH6hP9zWdLIWY//OTfMnzz6xWQRxQqsUFefwHuHyg=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
+<script src="{{ 'charts.js' | url }}" defer></script>
+<script src="{{ 'sim.js' | url }}" defer></script>
+<script>
+  // Copy button on the pseudocode
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('.sv-copy');
+    if (!btn || !navigator.clipboard) return;
+    navigator.clipboard.writeText(document.querySelector(btn.getAttribute('data-copy')).textContent).then(function () {
+      btn.classList.add('is-done');
+      setTimeout(function () { btn.classList.remove('is-done'); }, 1600);
+    });
+  });
+</script>
 {% endblock %}
