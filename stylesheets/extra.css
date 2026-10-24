@@ -1,0 +1,195 @@
+/* Site-wide theme: color tokens for light and dark, fonts, the header and the
+   footer. The landing page adds material/home.css on top. */
+
+:root,
+[data-md-color-scheme="default"] {
+  --sv-bg: #ffffff;
+  --sv-bg-soft: #faf8f5;
+  --sv-card: #ffffff;
+  --sv-ink: #111418;
+  --sv-ink-2: #3b424e;
+  --sv-mute: #646c79;
+  --sv-line: #ece8e2;
+  --sv-line-2: #dcd6cd;
+  --sv-chip: #f4f1ec;
+  --sv-slot: rgba(17, 20, 24, .13);
+  --sv-accent: #e0382b;
+  --sv-accent-ink: #b8291e;
+  --sv-accent-soft: #fdeeec;
+  --sv-accent-line: #f2b1aa;
+  --sv-on-accent: #ffffff;
+  --sv-blue: #1f6fe0;
+  --sv-blue-soft: #edf3fd;
+  --sv-ghost: #6f7787;
+  --sv-good: #1a9e55;
+  --sv-glow-accent: rgba(224, 56, 43, .16);
+  --sv-glow-blue: rgba(31, 111, 224, .14);
+  --sv-grid: rgba(17, 20, 24, .05);
+  --sv-title-end: #8f2a20;
+  --sv-shadow: 0 1px 2px rgba(17, 20, 24, .04), 0 12px 32px -14px rgba(17, 20, 24, .12);
+  --sv-code-bg: #0d1117;
+  --sv-code-line: #222936;
+
+  /* Material: a light header with dark text */
+  --md-primary-fg-color: #ffffff;
+  --md-primary-fg-color--light: #ffffff;
+  --md-primary-fg-color--dark: #f4f1ec;
+  --md-primary-bg-color: #111418;
+  --md-primary-bg-color--light: #646c79;
+  --md-accent-fg-color: #e0382b;
+  --md-accent-fg-color--transparent: rgba(224, 56, 43, .1);
+  --md-typeset-a-color: #b8291e;
+}
+
+[data-md-color-scheme="slate"] {
+  --sv-bg: #0e1013;
+  --sv-bg-soft: #121519;
+  --sv-card: #161a20;
+  --sv-ink: #eef0f3;
+  --sv-ink-2: #c3c8d0;
+  --sv-mute: #939cab;
+  --sv-line: #242932;
+  --sv-line-2: #333a45;
+  --sv-chip: #1d222a;
+  --sv-slot: rgba(238, 240, 243, .14);
+  --sv-accent: #ff6b5c;
+  --sv-accent-ink: #ff8f83;
+  --sv-accent-soft: rgba(255, 107, 92, .1);
+  --sv-accent-line: rgba(255, 107, 92, .45);
+  --sv-on-accent: #2a0b07;
+  --sv-blue: #2f74de;
+  --sv-blue-soft: rgba(61, 132, 240, .12);
+  --sv-ghost: #8b94a3;
+  --sv-good: #3ccf7f;
+  --sv-glow-accent: rgba(255, 107, 92, .14);
+  --sv-glow-blue: rgba(61, 132, 240, .16);
+  --sv-grid: rgba(255, 255, 255, .045);
+  --sv-title-end: #ff9b8f;
+  --sv-shadow: 0 1px 0 rgba(255, 255, 255, .03) inset, 0 18px 40px -20px rgba(0, 0, 0, .7);
+  --sv-code-bg: #0b0d11;
+  --sv-code-line: #232934;
+
+  --md-hue: 220;
+  --md-default-bg-color: #0e1013;
+  --md-primary-fg-color: #0e1013;
+  --md-primary-fg-color--light: #0e1013;
+  --md-primary-fg-color--dark: #0a0c0f;
+  --md-primary-bg-color: #eef0f3;
+  --md-primary-bg-color--light: #939cab;
+  --md-accent-fg-color: #ff6b5c;
+  --md-accent-fg-color--transparent: rgba(255, 107, 92, .1);
+  --md-typeset-a-color: #ff8f83;
+}
+
+/* Inter for text, JetBrains Mono for code (loaded in main.html) */
+:root {
+  --md-text-font: "Inter";
+  --md-code-font: "JetBrains Mono";
+}
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "cv11", "ss01";
+}
+
+/* ---------- header: one translucent row ---------- */
+
+.md-header {
+  background-color: color-mix(in srgb, var(--sv-bg) 82%, transparent);
+  box-shadow: 0 1px 0 var(--sv-line);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  backdrop-filter: saturate(180%) blur(14px);
+}
+.md-header--shadow { box-shadow: 0 1px 0 var(--sv-line); }
+.md-header__inner { padding: 0 .4rem; }
+.md-header__button.md-logo img { height: 1.7rem; }
+.md-header__title { margin-left: .2rem; font-weight: 700; letter-spacing: -0.02em; }
+.md-header__title .md-header__topic:first-child { font-weight: 700; }
+
+/* Home and Blog sit beside the wordmark on wide screens */
+.sv-headnav, .sv-headspace { display: none; }
+@media screen and (min-width: 76.25em) {
+  .sv-headnav { display: block; flex: none; margin-left: .4rem; }
+  .sv-headnav .md-tabs {
+    display: block;
+    overflow: visible;
+    width: auto;
+    background: none;
+    color: inherit;
+  }
+  .sv-headnav .md-tabs .md-grid { max-width: none; margin: 0; padding: 0; }
+  .sv-headnav .md-tabs__list { display: flex; gap: .2rem; margin: 0; padding: 0; white-space: nowrap; }
+  .sv-headnav .md-tabs__item { height: auto; padding: 0; }
+  .sv-headnav .md-tabs__link {
+    display: block;
+    margin: 0;
+    padding: .3rem .55rem;
+    border-radius: .4rem;
+    color: var(--sv-ink-2);
+    font-size: .7rem;
+    font-weight: 600;
+    opacity: 1;
+    transition: background-color .15s, color .15s;
+  }
+  .sv-headnav .md-tabs__link:hover { background: var(--sv-chip); color: var(--sv-ink); }
+  .sv-headnav .md-tabs__item--active .md-tabs__link { color: var(--sv-ink); background: var(--sv-chip); }
+  /* The wordmark stays put: no swap to the page title on scroll */
+  .md-header__title { flex: none; width: auto; margin-right: 0; }
+  .md-header__ellipsis { position: static; width: auto; }
+  .md-header__title .md-header__topic:first-child {
+    position: static;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: none !important;
+    transition: none;
+  }
+  .md-header__title .md-header__topic + .md-header__topic { display: none; }
+  .sv-headspace { display: block; flex: 1; }
+}
+
+/* Search: a quiet field in the light or dark header */
+@media screen and (min-width: 60em) {
+  [data-md-toggle="search"]:not(:checked) ~ .md-header .md-search__form {
+    border: 1px solid var(--sv-line);
+    border-radius: .5rem;
+    background-color: var(--sv-chip);
+  }
+  [data-md-toggle="search"]:not(:checked) ~ .md-header .md-search__form:hover {
+    border-color: var(--sv-line-2);
+    background-color: var(--sv-chip);
+  }
+  .md-search__input::placeholder { color: var(--sv-mute); }
+  .md-search__input + .md-search__icon { color: var(--sv-mute); }
+}
+
+/* ---------- footer ---------- */
+
+/* Set on the element that carries the scheme, so the tokens resolve per scheme */
+[data-md-color-scheme] {
+  --md-footer-fg-color: var(--sv-ink-2);
+  --md-footer-fg-color--light: var(--sv-mute);
+  --md-footer-fg-color--lighter: var(--sv-mute);
+  --md-footer-bg-color: var(--sv-bg-soft);
+  --md-footer-bg-color--dark: var(--sv-bg-soft);
+}
+
+.md-footer { background: var(--sv-bg-soft); color: var(--sv-ink-2); border-top: 1px solid var(--sv-line); }
+.md-footer-meta { background: var(--sv-bg-soft); }
+.md-footer-meta__inner { padding: .6rem .4rem; }
+.md-copyright, .md-copyright__highlight { color: var(--sv-mute); }
+.md-footer-meta.md-typeset a, .md-copyright a { color: var(--sv-mute); }
+.md-footer-meta.md-typeset a:hover, .md-copyright a:hover { color: var(--sv-ink); }
+.md-social__link svg { fill: var(--sv-mute); }
+.md-social__link:hover svg { fill: var(--sv-ink); }
+.md-footer__link { color: var(--sv-ink-2); }
+
+/* ---------- blog and other pages ---------- */
+
+.md-typeset h1, .md-typeset h2, .md-typeset h3 { letter-spacing: -0.02em; }
+.md-typeset h1 { color: var(--sv-ink); font-weight: 750; }
+.md-typeset h2 { font-weight: 700; }
+.md-typeset h3 { font-weight: 600; }
+.md-typeset a { text-underline-offset: .15em; }
+.md-typeset img { border-radius: .3rem; }
+.md-typeset code { border-radius: .25rem; }
+.md-nav__link--active, .md-nav__item .md-nav__link--active { color: var(--md-typeset-a-color); }
